@@ -1,3 +1,5 @@
+#Delete .txt nya buat jalanin di local
+
 #konfigurasi untuk koneksi MySQL
 spring.sql.init.platform=mysql
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
