@@ -19,7 +19,7 @@ import java.io.Serializable;
 @Setter
 @Getter
 @Entity
-@Table(name = "user")
+@Table(name = "user_siretail")
 public class UserModel implements Serializable {
     @Id
     @GeneratedValue(generator = "system-uuid")
