@@ -34,3 +34,4 @@ build/
 
 ## Local Properties
 src/main/resources/application.properties
+src/main/resources/application-production.properties
