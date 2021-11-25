@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <title>Emsidi</title>
+  <meta charset="UTF-8">
+  <title> Home </title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar('Home')"></nav>
+<div class="d-flex justify-content-center">
+  <div class="m-4">
+    <div class="d-flex justify-content-center">
+      <h2 th:text="'Hello ' + ${#httpServletRequest.remoteUser} + '!'">
+        Login as</h2>
+    </div>
+    <h2>Selamat datang di SI-RETAIL</h2>
+    <section>
+      <br>
+      <h2 th:text="${notif}"></h2>
+      <br>
+    </section>
+    <div class=" my-3 d-flex justify-content-center">
+      <a th:href="@{/user/add}" class="mx-2 btn btn-danger">Tambah user baru</a>
+    </div>
+    <div class=" my-3 d-flex justify-content-center">
+      <a th:href="@{/user/update-password}" class="mx-2 btn btn-danger">Ubah password</a>
+    </div>
+
+
+  </div>
+</div>
+
+</body>
+
+</html>

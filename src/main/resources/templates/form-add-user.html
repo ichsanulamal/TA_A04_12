@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <title>Home</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div class="container">
+  <div class="card m-4 p-4">
+    <div class="justify-content-center">
+      <h2>Tambah User Baru</h2>
+      <br>
+      <form th:action="@{/user/add}" th:object="${user}" method="POST">
+        <label>Username</label>
+        <input type="text" name="username" class="form-control"/>
+
+        <label>Nama</label>
+        <input type="text" name="name" class="form-control"/>
+
+        <label>Password</label>
+        <input type="password" name="password" class="form-control">
+
+        <label>Role</label>
+        <select name="role" class="form-control">
+          <option selected value="">--Pilih Role</option>
+          <option th:each="role: ${listRole}"
+                  th:value="${role.id}"
+                  th:text="${role.nama}">
+
+          </option>
+        </select>
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a class="btn btn-link" href="/">Home</a>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>
