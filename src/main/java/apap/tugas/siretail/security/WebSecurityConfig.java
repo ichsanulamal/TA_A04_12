@@ -21,7 +21,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
-                .anyRequest().authenticated()
+//                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login").permitAll()
@@ -30,13 +30,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login").permitAll();
     }
 
-   @Autowired
-   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-       auth.inMemoryAuthentication()
-               .passwordEncoder(new BCryptPasswordEncoder())
-               .withUser("kijangSatu").password(new BCryptPasswordEncoder().encode("nasiGoreng"))
-               .roles("Staff Cabang");
-   }
+//   @Autowired
+//   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//       auth.inMemoryAuthentication()
+//               .passwordEncoder(new BCryptPasswordEncoder())
+//               .withUser("kijangSatu").password(new BCryptPasswordEncoder().encode("nasiGoreng"))
+//               .roles("Staff Cabang");
+//   }
 
     @Bean
     public BCryptPasswordEncoder encoder() {
