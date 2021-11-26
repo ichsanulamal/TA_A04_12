@@ -1,25 +1,26 @@
 package apap.tugas.siretail.controller;
 
 import apap.tugas.siretail.model.CabangModel;
+import apap.tugas.siretail.model.ItemCabangModel;
 import apap.tugas.siretail.rest.ListSiItemModel;
 import apap.tugas.siretail.rest.SiItemModel;
+import apap.tugas.siretail.service.ItemCabangService;
 import apap.tugas.siretail.service.ItemRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class ItemController {
     @Autowired
     private ItemRestService itemRestService;
+
+    @Autowired
+    private ItemCabangService itemCabangService;
 
     @GetMapping("/item/{idCabang}/add")
     public String addItemForm(Model model, @PathVariable Integer idCabang) {
@@ -79,5 +80,13 @@ public class ItemController {
 
         model.addAttribute("listItem", listItem);
         return "form-add-item";
+    }
+
+    @GetMapping("/item/delete/{id}")
+    public String deleteItem(@PathVariable int id, Model model) {
+        ItemCabangModel item = itemCabangService.getItemCabangById(id);
+        int cabangId = item.getCabang().getId();
+        itemCabangService.deleteItemCabang(item);
+        return "redirect:/cabang/view/" + cabangId;
     }
 }

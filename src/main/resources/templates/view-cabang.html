@@ -52,7 +52,7 @@
                             <td th:text="${item.stok}"></td>
                             <td th:text="${item.kategori}"></td>
                             <td><a class="btn btn-success" href="#">Terapkan Promo</a></td>
-                            <td><a class="btn btn-danger" href="#">Hapus Item</a></td>
+                            <td><a class="btn btn-danger" th:href="@{/item/delete/} + ${item.id}">Hapus Item</a></td>
                         </tr>
                         </tbody>
                     </table>
