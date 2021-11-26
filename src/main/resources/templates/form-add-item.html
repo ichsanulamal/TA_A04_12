@@ -26,15 +26,8 @@
                                     th:field="*{listSiItem[__${iterationStatus.index}__].uuid}"
                                     class="form-control">
                                 <div th:each="item, iterationStatus2 : ${listItem}">
-                                    <option th:value="${item.uuid}" th:text="${item.nama}">
-                                        <input name="harga"
-                                               th:field="*{listSiItem[__${iterationStatus.index}__].harga}"
-                                               th:value="${item.harga}"
-                                               class="form-check" type="number" hidden>
-                                        <input name="kategori"
-                                               th:field="*{listSiItem[__${iterationStatus.index}__].kategori}"
-                                               th:value="${item.kategori}"
-                                               class="form-check" type="text" hidden>
+                                    <option th:value="${item.uuid}"
+                                            th:text="${item.nama} + ' <' + ${item.stok} + '>'">
                                     </option>
                                 </div>
                             </select>

@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface ItemRestService {
     void addItem(int idCabang, SiItemModel item);
+    SiItemModel getSiItemModel(String uuid);
     List<SiItemModel> getListItemFromSiItem();
 }
