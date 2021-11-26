@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <title>Si-Retail</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar('User')"></nav>
+<div class="container">
+  <div class="card m-4 p-4">
+    <div class="justify-content-center">
+      <h2>Edit User</h2>
+      <br>
+      <form th:action="@{/user/edit}" th:object="${user}" method="POST">
+
+        <input type="hidden" th:field="*{id}" />
+
+        <label>Username</label>
+        <input type="text" name="username" class="form-control" th:value="*{username}"/>
+        <br>
+
+        <label>Nama</label>
+        <input type="text" name="name" class="form-control" th:value="*{name}"/>
+        <br>
+
+        <div sec:authorize="hasAuthority('Kepala Retail')">
+            <label>Password</label>
+            <input type="password" name="password" class="form-control">
+            <br>
+        </div>
+
+        <label>Role</label>
+        <select sec:authorize="hasAuthority('Kepala Retail')" th:value="*{role.id}" name="role" class="form-control" >
+          <option selected th:value="*{role.id}" th:text="*{role.nama}"></option>
+          <option th:each="role: ${listRole}"
+                  th:value="${role.id}"
+                  th:text="${role.nama}">
+          </option>
+        </select>
+        <select readonly style="pointer-events: none;" sec:authorize="hasAuthority('Manager Cabang')" name="role" th:value="*{role.id}" class="form-control" >
+          <option selected th:value="*{role.id}" th:text="*{role.nama}"></option>
+          <option th:each="role: ${listRole}"
+                  th:value="${role.id}"
+                  th:text="${role.nama}">
+          </option>
+        </select>
+        <br>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a class="btn btn-danger" href="/user/viewall">Cancel</a>
+        <br><br>
+        <h4 th:text="${notif}"></h4>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>

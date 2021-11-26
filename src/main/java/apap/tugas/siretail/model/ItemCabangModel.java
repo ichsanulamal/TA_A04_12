@@ -31,31 +31,30 @@ public class ItemCabangModel implements Serializable {
     @Column(name = "uuid_item")
     private String itemID;
 
-    @NotNull
+//    @NotNull
     @Size(max = 50)
-    @Column(name = "nama", nullable = false)
+    @Column(name = "nama")
     private String nama;
 
-    @NotNull
-    @Column(name = "harga", nullable = false)
+//    @NotNull
+    @Column(name = "harga")
     private int harga;
 
     @NotNull
     @Column(name = "stok", nullable = false)
     private int stok;
 
-    @NotNull
+//    @NotNull
     @Size(max = 100)
-    @Column(name = "kategori", nullable = false)
+    @Column(name = "kategori")
     private String kategori;
 
     //Relasi dengan CabangModel
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "cabang_id", referencedColumnName = "id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "cabang_id", referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private CabangModel cabang;
 
-    @NotNull
-    @Column(name = "id_promo", nullable = false)
+    @Column(name = "id_promo")
     private int idPromo;
 }

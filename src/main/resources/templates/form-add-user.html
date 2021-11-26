@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
-  <title>Home</title>
+  <title>Si-Retail</title>
   <object th:include="fragments/fragment :: css" th:remove="tag"></object>
   <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
 <body>
+<nav th:replace="fragments/fragment :: navbar('User')"></nav>
 <div class="container">
   <div class="card m-4 p-4">
     <div class="justify-content-center">
@@ -32,6 +33,8 @@
         </select>
         <br>
         <button type="submit" class="btn btn-primary">Submit</button>
+        <br><br>
+        <h4 th:text="${notif}"></h4>
         <a class="btn btn-link" href="/">Home</a>
       </form>
     </div>

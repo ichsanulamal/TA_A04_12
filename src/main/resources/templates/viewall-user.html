@@ -1,26 +1,45 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
-
+ 
 <head>
-  <title>Emsidi</title>
-  <meta charset="UTF-8">
-  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
-  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <title>Si-Retail</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
-
+ 
 <body>
 <nav th:replace="fragments/fragment :: navbar('User')"></nav>
-<div class="container">
-  <h2>Daftar Seluruh User</h2>
-  <br>
-  <div class="card m-4 p-4">
-    <div class=" my-3 d-flex justify-content-center">
-      <a th:href="@{/user/add}" class="mx-2 btn btn-danger">Tambah user baru</a>
-    </div>
-  <a class="btn btn-primary" href="/">Home</a>
-  </div>
+<div class="container justify-content-center">
+    <br>
+    <h2>Daftar User Si-Retail</h2>
+    <br>
+    <table class="table text-center">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Nama</th>
+                <th>Username</th>
+                <th>Role</th>
+                <th sec:authorize="hasAnyAuthority('Kepala Retail', 'Manager Cabang')">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="user, iterationStatus : ${listUser}"
+                th:style="${iterationStatus.even} ? 'font-weight:bold;'">
+                <td th:text="${iterationStatus.count}"></td>
+                <td th:text="${user.name}"></td>
+                <td th:text="${user.username}"></td>
+                <td th:text="${user.role.nama}"></td>
+                <td sec:authorize="hasAnyAuthority('Kepala Retail', 'Manager Cabang')">
+                    <a class="btn btn-danger" th:href="@{/user/edit/} + ${user.username}">Edit</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-primary" href="/">Home</a>
+    <a sec:authorize="hasAuthority('Kepala Retail')" th:href="@{/user/add}" class="mx-2 btn btn-outline-primary">Tambah User Baru</a>
 </div>
-
+ 
 </body>
-
+ 
 </html>
