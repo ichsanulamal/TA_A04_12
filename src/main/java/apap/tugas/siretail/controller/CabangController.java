@@ -72,7 +72,8 @@ public class CabangController {
     @GetMapping("/cabang/viewall")
     public String viewAllCabang(Authentication authentication, Model model) {
         List<CabangModel> listCabang = new ArrayList<CabangModel>();
-        if (authentication.getAuthorities().equals("ROLE_Manager Cabang")){
+        System.out.println(authentication.getAuthorities().toString().equals("[ROLE_Staff Cabang]"));
+        if (authentication.getAuthorities().toString().equals("ROLE_Manager Cabang")){
             listCabang = cabangService.getAllCabangByManager();
         } else {
             listCabang = cabangService.getAllCabang();
