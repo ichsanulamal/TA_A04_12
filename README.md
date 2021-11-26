@@ -1,9 +1,11 @@
-# Tugas Akhir - SI-RETAIL
+# Kelompok 12 - SI-RETAIL
 ## Anggota Kelompok
 * **Zaafira Rihhadatul'aisy  Hendrarto** - *1906353946* - *A*
 * **Sultan Daffa Nusantara** - *1906399581* - *A*
 * **Denny Octavian** - *1906298834* - *A*
 * **Muhammad Ichsanul Amal** - *1906353454* - *A*
+
+Website: https://si-retail.herokuapp.com
 
 ---
 ## **Kontrak Tahap 1 Tugas Akhir**
