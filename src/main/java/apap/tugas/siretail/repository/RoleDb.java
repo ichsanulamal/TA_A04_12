@@ -4,4 +4,5 @@ import apap.tugas.siretail.model.RoleModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RoleDb extends JpaRepository<RoleModel, Integer> {
+    RoleModel findById(int id);
 }

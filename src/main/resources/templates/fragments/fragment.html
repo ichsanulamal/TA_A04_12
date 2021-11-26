@@ -41,6 +41,9 @@
       <li th:classappend="${page == 'Item Cabang'} ? active : ''"class="nav-item">
         <a class="nav-link" href="/item-cabang/viewall">Item Cabang</a>
       </li>
+      <li th:classappend="${page == 'User'} ? active : ''"class="nav-item">
+        <a class="nav-link" href="/user/viewall">User</a>
+      </li>
     </ul>
     <form class="form-inline my-2 my-lg-0" th:action="@{/cabang/view}" method="GET">
       <input class="form-control mr-sm-2" type="search"

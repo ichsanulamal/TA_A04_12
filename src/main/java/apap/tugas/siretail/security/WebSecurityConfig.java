@@ -19,8 +19,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
-                .antMatchers("/user/add").hasAuthority("Kepala Retail")
+                .antMatchers("/user/add").hasAnyAuthority("Kepala Retail")
                 .antMatchers("cabang/**").hasAnyAuthority("Kepala Retail", "Manager Cabang")
+                .antMatchers("/user/edit/**").hasAnyAuthority("Kepala Retail", "Manager Cabang")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -35,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
       auth.inMemoryAuthentication()
               .passwordEncoder(encoder())
               .withUser("kijangSatu").password(encoder().encode("nasiGoreng"))
-              .roles("Staff Cabang");
+              .roles("Kepala Retail");
   }
 
     public BCryptPasswordEncoder encoder() {
