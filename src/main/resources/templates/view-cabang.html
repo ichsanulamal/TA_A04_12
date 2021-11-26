@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <title>Si-Retail</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar('Cabang')"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2>Detail Cabang</h2>
+                <br>
+                <p th:text="'Nama Cabang : ' + ${cabang.nama}"></p>
+                <p th:text="'Alamat Cabang : ' + ${cabang.alamat}"></p>
+                <p th:text="'Nomor Telepon Cabang : ' + ${cabang.noTelepon}"></p>
+                <p th:if="${cabang.status == 0}">
+                    <span th:text="'Status: Menunggu Persetujuan'"></span>
+                </p>
+                <p th:if="${cabang.status == 1}">
+                    <span th:text="'Status: Ditolak'"></span>
+                </p>
+                <p th:if="${cabang.status == 2}">
+                    <span th:text="'Status: Disetujui'"></span>
+                </p>
+                <p><span th:text="'Ukuran : ' + ${cabang.ukuran}"></span><span> m<sup>2</sup></span></p>
+                <p th:text="'Penanggung Jawab : ' + ${cabang.penanggungJawab.name}"></p>
+                <a class="btn btn-primary float-right mb-3" href="#">Tambah Item</a>
+                <div>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Harga</th>
+                            <th>Stok</th>
+                            <th>Kategori</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="item, iterationStat : ${cabang.listItem}"
+                            th:style="${iterationStat.even} ? 'font-weight:bold;'">
+                            <td th:text="${iterationStat.count}"></td>
+                            <td th:text="${item.nama}"></td>
+                            <td th:text="${item.harga}"></td>
+                            <td th:text="${item.stok}"></td>
+                            <td th:text="${item.kategori}"></td>
+                            <td><a class="btn btn-success" href="#">Terapkan Promo</a></td>
+                            <td><a class="btn btn-danger" href="#">Hapus Item</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+<!--    <a class="btn btn-primary" th:href="@{/pegawai/add/} + ${cabang.noCabang}">Tambah Pegawai</a>-->
+<!--    <a class="btn btn-primary" href="/cabang/viewall">Kembali</a>-->
+</div>
+
+</body>
+
+</html>
