@@ -4,8 +4,11 @@ import apap.tugas.siretail.model.RoleModel;
 import apap.tugas.siretail.model.UserModel;
 import apap.tugas.siretail.service.RoleService;
 import apap.tugas.siretail.service.UserService;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +27,9 @@ public class UserController {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private UserDetailsService userDetailService;
 
     @GetMapping(value = "/add")
     private String addUserForm(Model model) {
@@ -76,9 +82,41 @@ public class UserController {
     }
 
     @GetMapping("/viewall")
-    public String viewAllUser(
-            Model model
-    ){
+    public String viewAllUser(Model model) {
+        model.addAttribute("listUser", userService.retrieveAllUser());
+        model.addAttribute("notif", "");
         return "viewall-user";
+    }
+
+    @GetMapping("/edit/{username}")
+    public String editUserForm(@PathVariable String username, Model model) {
+        UserModel user = userService.findUserByUsername(username);
+        model.addAttribute("user", user);
+        model.addAttribute("listRole", roleService.findAll());
+        return "form-update-user";
+    }
+
+    @PostMapping("/edit")
+    public String editUserSubmit(@ModelAttribute UserModel user, RedirectAttributes attributes, Model model) {
+        UserModel userInDb = userService.findById(user.getId());
+        userInDb.setName(user.getName());
+        userInDb.setRole(user.getRole());
+        userInDb.setUsername(user.getUsername());
+
+        String msg = "";
+        
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        if (user.getPassword().isEmpty() || passwordEncoder.matches(user.getPassword(), userInDb.getPassword())) {
+            msg = userService.editUser(userInDb);
+        } else {
+            msg = userService.updateUserPassword(userInDb, user.getPassword());
+        }
+
+        if (msg.equals("Password berhasil diubah!")) {
+            msg = "User berhasil diubah!";
+        }
+        attributes.addFlashAttribute("notif", msg);
+
+        return "redirect:/user/edit/" + userInDb.getUsername();
     }
 }

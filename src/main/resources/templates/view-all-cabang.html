@@ -41,29 +41,27 @@
 									<td>
 										<a
 											class="btn btn-primary"
-											th:href="@{/cabang/view} + ${cabang.id}"
-											>Lihat Detail Cabang</a
+											th:href="@{/cabang/view/} + ${cabang.id}"
+											>Lihat</a
 										>
 									</td>
 									<td>
 										<a
 											th:class="${'btn btn-primary'}"
 											th:href="@{/cabang/update/} + ${cabang.id}"
-											>Update Cabang</a
+											>Update</a
 										>
 									</td>
 									<td>
 										<a
 											th:class="${'btn btn-danger'}"
 											th:href="@{/cabang/delete/} + ${cabang.id}"
-											>Delete Cabang</a
+											>Delete</a
 										>
 									</td>
 								</tr>
 							</tbody>
 						</table>
-
-	
 					</div>
 				</div>
 				<br />
