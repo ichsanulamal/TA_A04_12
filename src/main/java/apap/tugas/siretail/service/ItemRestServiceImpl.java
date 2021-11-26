@@ -9,15 +9,15 @@ import apap.tugas.siretail.rest.SiItemModel;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import javax.transaction.Transactional;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Transactional
@@ -36,28 +36,70 @@ public class ItemRestServiceImpl implements ItemRestService {
 
     @Override
     public void addItem(int idCabang, SiItemModel item) {
-        ItemCabangModel itemCabang = itemCabangDb.getByItemID(item.getUuid());
-        if ( itemCabang != null ) {
-            itemCabang.setStok(itemCabang.getStok() + itemCabang.getStok());
-            itemCabangDb.save(itemCabang);
+        SiItemModel siItemModel = getSiItemModel(item.getUuid());
+        System.out.println(siItemModel.getStok());
+        System.out.println(item.getStok());
+        if (item.getStok() > siItemModel.getStok()) {
             return;
         }
-        ItemCabangModel newItemCabang = new ItemCabangModel();
 
-        CabangModel cabang = cabangDb.getById(idCabang);
-        newItemCabang.setCabang(cabang);
-        newItemCabang.setItemID(item.getUuid());
-        newItemCabang.setStok(item.getStok());
-        newItemCabang.setKategori(item.getKategori());
-        newItemCabang.setNama(item.getNama());
-        itemCabangDb.save(newItemCabang);
+        ItemCabangModel itemCabang = itemCabangDb.getByItemID(item.getUuid());
+        if ( itemCabang != null ) {
+            itemCabang.setStok(itemCabang.getStok() + item.getStok());
+            itemCabangDb.save(itemCabang);
+        } else {
+            itemCabang = new ItemCabangModel();
+
+            CabangModel cabang = cabangDb.getById(idCabang);
+            itemCabang.setCabang(cabang);
+            itemCabang.setItemID(item.getUuid());
+            itemCabang.setStok(item.getStok());
+
+            itemCabang.setNama(siItemModel.getNama());
+            itemCabang.setHarga(siItemModel.getHarga());
+            itemCabang.setKategori(siItemModel.getKategori());
+
+            itemCabangDb.save(itemCabang);
+        }
+        // post
+//        siItemModel.setStok(siItemModel.getStok() - item.getStok());
+//        System.out.println(this.webClient
+//                .post()
+//                .uri("/")
+//                .body(Mono.just(item), SiItemModel.class)
+//                .retrieve()
+//                .bodyToMono(Map.class).block());
+        // put
+        int stokSiItem = siItemModel.getStok() - item.getStok();
+        HashMap reqBody = new HashMap<>();
+        reqBody.put("stok", stokSiItem);
 
         System.out.println(this.webClient
-                .post()
-                .uri("/")
-                .body(Mono.just(item), SiItemModel.class)
+                .put()
+                .uri("/" + siItemModel.getUuid())
+                .body(Mono.just(reqBody), HashMap.class)
                 .retrieve()
-                .bodyToMono(Map.class).block());
+                .bodyToMono(HashMap.class)
+                .block());
+    }
+
+    @Override
+    public SiItemModel getSiItemModel(String uuid) {
+        try {
+            LinkedHashMap res = this.webClient
+                    .get()
+                    .uri("/" + uuid)
+                    .retrieve()
+                    .bodyToMono(LinkedHashMap.class).block();
+            LinkedHashMap itemMap = (LinkedHashMap) (res.get("result"));
+            ObjectMapper mapper = new ObjectMapper();
+            SiItemModel item = mapper.convertValue(itemMap, SiItemModel.class);
+            System.out.println(item);
+            return item;
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return null;
     }
 
     @Override
@@ -79,11 +121,5 @@ public class ItemRestServiceImpl implements ItemRestService {
         return null;
 
     }
-
-
-
-
-
-
 
 }

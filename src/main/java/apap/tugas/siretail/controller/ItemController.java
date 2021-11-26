@@ -1,6 +1,5 @@
 package apap.tugas.siretail.controller;
 
-import apap.tugas.siretail.model.CabangModel;
 import apap.tugas.siretail.rest.ListSiItemModel;
 import apap.tugas.siretail.rest.SiItemModel;
 import apap.tugas.siretail.service.ItemRestService;
@@ -9,12 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class ItemController {
