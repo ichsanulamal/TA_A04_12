@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface CabangService {
     CabangModel getCabangByIdCabang(int id);
+    List<CabangModel> getAllCabang();
+    List<CabangModel> getAllCabangByManager();
+    void deleteCabang(CabangModel cabang);
+    void updateCabang(CabangModel cabang);
 }

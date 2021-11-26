@@ -31,4 +31,31 @@ public class CabangServiceImpl implements CabangService {
         }
         return null;
     }
+
+    @Override
+    public List<CabangModel> getAllCabang(){
+        return cabangDb.findAll();
+    }
+
+    @Override
+    public List<CabangModel> getAllCabangByManager(){
+        List<CabangModel> listCabang = cabangDb.findAll();
+        List<CabangModel> listCabangManager = new ArrayList<CabangModel>();
+        for (CabangModel cabang : listCabang) {
+            if (cabang.getPenanggungJawab().getRole().getNama().equalsIgnoreCase("Manager Cabang")) {
+                listCabangManager.add(cabang);
+            }
+        }
+        return listCabangManager;
+    }
+
+    @Override
+    public void deleteCabang(CabangModel cabang){
+        cabangDb.delete(cabang);
+    }
+
+    @Override
+    public void updateCabang(CabangModel cabang) {
+        cabangDb.save(cabang);
+    }
 }
