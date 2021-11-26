@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -67,6 +68,22 @@ public class UserServiceImpl implements UserService{
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode(password);
         return hashedPassword;
+    }
+
+    @Override
+    public List<UserModel> retrieveAllUser() {
+        return userDb.findAll();
+    }
+
+    @Override
+    public UserModel findById(String id) {
+        return userDb.findById(id);
+    }
+
+    @Override
+    public String editUser(UserModel user) {
+        userDb.save(user);
+        return "User berhasil diubah!";
     }
 
 
