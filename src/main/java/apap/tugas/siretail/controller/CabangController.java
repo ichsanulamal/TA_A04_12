@@ -82,7 +82,7 @@ public class CabangController {
         return "view-all-cabang";
     }
 
-    @PostMapping("/cabang/delete/{id}")
+    @GetMapping("/cabang/delete/{id}")
     public String deleteCabang(
         @PathVariable(value = "id") int id,
         Model model
