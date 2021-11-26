@@ -16,6 +16,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.Authentication;
 
 @SuppressWarnings("ALL")
 @Controller
@@ -69,19 +70,18 @@ public class CabangController {
     }
 
     @GetMapping("/cabang/viewall")
-    public String viewAllCabang(@ModelAttribute UserModel userModel, Model model) {
+    public String viewAllCabang(Authentication authentication, Model model) {
         List<CabangModel> listCabang = new ArrayList<CabangModel>();
-        if (userModel.getRole().getNama().equals("Manager Cabang")){
+        if (authentication.getAuthorities().equals("ROLE_Manager Cabang")){
             listCabang = cabangService.getAllCabangByManager();
         } else {
             listCabang = cabangService.getAllCabang();
         }
-        
         model.addAttribute("listCabang", listCabang);
         return "view-all-cabang";
     }
 
-    @PostMapping("/cabang/{id}")
+    @PostMapping("/cabang/delete/{id}")
     public String deleteCabang(
         @PathVariable(value = "id") int id,
         Model model
