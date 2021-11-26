@@ -5,7 +5,7 @@
 * **Denny Octavian** - *1906298834* - *A*
 * **Muhammad Ichsanul Amal** - *1906353454* - *A*
 
-Website: https://si-retail.herokuapp.com
+### Website: https://si-retail.herokuapp.com
 
 ---
 ## **Kontrak Tahap 1 Tugas Akhir**
