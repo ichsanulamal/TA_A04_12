@@ -39,7 +39,7 @@ public class UserController {
                                  RedirectAttributes attributes) {
         String message = userService.addUser(userModel);
         attributes.addFlashAttribute("notif", message);
-        return "redirect:/";
+        return "redirect:/user/add";
     }
 
     @GetMapping(value = "/update-password")

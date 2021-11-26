@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface ItemCabangDb extends JpaRepository<ItemCabangModel, Integer> {
-
+    ItemCabangModel getByItemID(String itemID);
 }

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Home</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="justify-content-center">
+            <h2>Tambah Item Cabang</h2>
+            <br>
+            <form th:action="@{/item/__${idCabang}__/add}" th:object="${listAddItem}" method="POST">
+                <table class="table">
+                    <thead>
+                    <th>Nama Menu</th>
+                    <th>
+                        <button class="btn btn-primary" type="submit" name="addRow">Tambah Row</button>
+                    </th>
+                    </thead>
+                    <tbody>
+                    <tr th:each="itemAdd, iterationStatus : *{listSiItem}">
+                        <td>
+                            <select required name="idBarang"
+                                    th:field="*{listSiItem[__${iterationStatus.index}__].uuid}"
+                                    class="form-control">
+                                <div th:each="item, iterationStatus2 : ${listItem}">
+                                    <option th:value="${item.uuid}" th:text="${item.nama}">
+                                        <input name="harga"
+                                               th:field="*{listSiItem[__${iterationStatus.index}__].harga}"
+                                               th:value="${item.harga}"
+                                               class="form-check" type="number" hidden>
+                                        <input name="kategori"
+                                               th:field="*{listSiItem[__${iterationStatus.index}__].kategori}"
+                                               th:value="${item.kategori}"
+                                               class="form-check" type="text" hidden>
+                                    </option>
+                                </div>
+                            </select>
+                        </td>
+                        <td>
+                            <input name="stok"
+                                   th:field="*{listSiItem[__${iterationStatus.index}__].stok}"
+                                   class="form-check" type="number" min="1" required>
+                        </td>
+                        <td>
+                            <button th:value="${iterationStatus.index}" class="btn btn-danger" type="submit"
+                                    name="deleteRow">Hapus</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-primary" type="submit" name="save">Submit</button>
+                <a class="btn btn-primary" href="/">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
