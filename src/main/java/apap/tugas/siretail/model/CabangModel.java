@@ -1,5 +1,6 @@
 package apap.tugas.siretail.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,24 +34,29 @@ public class CabangModel implements Serializable {
     private String alamat;
 
     @NotNull
+    @JsonIgnore
     @Column(name = "ukuran", nullable = false)
     private int ukuran;
 
     @NotNull
+    @JsonIgnore
     @Column(name = "status", nullable = false)
     private int status;
 
     @NotNull
+    @JsonIgnore
     @Size(max=20)
     @Column(name="no_telp", nullable = false)
     private String noTelepon;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(
             name = "penanggung_jawab"
     )
     UserModel penanggungJawab;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "cabang")
     private List<ItemCabangModel> listItem;
 }
