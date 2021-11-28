@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <title>Si-Retail</title>
+    <meta charset="UTF-8">
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar('Menu')"></nav>
+<div class="container">
+    <h2>Daftar Coupon</h2>
+    <br>
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="text-center">Nomor</th>
+            <th class="text-center">Kode Coupon</th>
+            <th class="text-center">Nama Coupon</th>
+            <th class="text-center">Total Discount</th>
+            <th class="text-center">Tanggal Expired</th>
+            <th class="text-center"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="coupon, iterationStatus : ${listCoupon}">
+            <td class="text-center" th:text="${iterationStatus.count}"></td>
+            <td class="text-center" th:text="${coupon.couponCode}"></td>
+            <td class="text-center" th:text="${coupon.couponName}"></td>
+            <td class="text-center" th:text="${coupon.discountAmount}"></td>
+            <td class="text-center" th:text="${coupon.expiryDate}"></td>
+            <td class="text-center"><a class="btn btn-primary text-center" href="/">Pilih</a></td>
+
+        </tr>
+        </tbody>
+    </table>
+    <div class="text-center">
+        <a class="btn btn-primary text-center" href="/">Home</a>
+    </div>
+</div>
+
+</body>
+
+</html>

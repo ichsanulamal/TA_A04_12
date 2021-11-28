@@ -1,8 +1,10 @@
 package apap.tugas.siretail.controller;
 
 import apap.tugas.siretail.model.ItemCabangModel;
+import apap.tugas.siretail.rest.CouponRestModel;
 import apap.tugas.siretail.rest.ListSiItemModel;
 import apap.tugas.siretail.rest.SiItemModel;
+import apap.tugas.siretail.service.CouponRestService;
 import apap.tugas.siretail.service.ItemCabangService;
 import apap.tugas.siretail.service.ItemRestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class ItemController {
 
     @Autowired
     private ItemCabangService itemCabangService;
+
+    @Autowired
+    private CouponRestService couponRestService;
 
     @GetMapping("/item/{idCabang}/add")
     public String addItemForm(Model model, @PathVariable Integer idCabang) {
@@ -86,6 +91,25 @@ public class ItemController {
         ItemCabangModel item = itemCabangService.getItemCabangById(id);
         int cabangId = item.getCabang().getId();
         itemCabangService.deleteItemCabang(item);
+        return "redirect:/cabang/view/" + cabangId;
+    }
+
+    @GetMapping("/item/coupon/{id}")
+    public String getListCoupon(@PathVariable int id, Model model) {
+        List<CouponRestModel> listCoupon = couponRestService.getListCoupon();
+        ItemCabangModel item = itemCabangService.getItemCabangById(id);
+        model.addAttribute("listCoupon", listCoupon);
+        model.addAttribute("item", item);
+        return "viewall-coupon";
+    }
+
+    @GetMapping("/item/coupon/{idItem}/{couponCode}")
+    public String calculateCoupon(@PathVariable int idItem, @PathVariable int couponCode, Model model) {
+        ItemCabangModel item = itemCabangService.getItemCabangById(idItem);
+        int cabangId = item.getCabang().getId();
+
+        item.setIdPromo(couponCode);
+        item.setHarga(item.getHarga() - item.getIdPromo());
         return "redirect:/cabang/view/" + cabangId;
     }
 }
