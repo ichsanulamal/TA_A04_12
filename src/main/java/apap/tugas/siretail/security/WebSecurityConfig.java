@@ -19,7 +19,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
-                .antMatchers("/user/add").hasAnyAuthority("Kepala Retail")
+                .antMatchers("/user/add").permitAll()
                 .antMatchers("cabang/**").hasAnyAuthority("Kepala Retail", "Manager Cabang")
                 .antMatchers("/user/edit/**").hasAnyAuthority("Kepala Retail", "Manager Cabang")
                 .antMatchers("/api/**").permitAll()
