@@ -12,7 +12,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -120,15 +119,7 @@ public class ItemRestServiceImpl implements ItemRestService {
             System.out.println(ex);
         }
         return null;
+
     }
 
-    @Override
-    public ResponseEntity<String> getListSiItem() {
-        return this.webClient
-                .get()
-                .uri("/")
-                .retrieve()
-                .toEntity(String.class)
-                .block();
-    }
 }

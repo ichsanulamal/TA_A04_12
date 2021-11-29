@@ -6,14 +6,9 @@ import apap.tugas.siretail.rest.SiItemModel;
 import apap.tugas.siretail.service.ItemCabangService;
 import apap.tugas.siretail.service.ItemRestService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.reactive.function.client.ClientResponse;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,9 +32,7 @@ public class ItemController {
         listAddItem.setListSiItem(listIt);
 
         model.addAttribute("listAddItem", listAddItem);
-//        return "form-add-item";
-        return "tesajax";
-
+        return "form-add-item";
     }
 
     @PostMapping(value = "/item/{idCabang}/add", params = {"save"})
@@ -94,10 +87,5 @@ public class ItemController {
         int cabangId = item.getCabang().getId();
         itemCabangService.deleteItemCabang(item);
         return "redirect:/cabang/view/" + cabangId;
-    }
-
-    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String>  all() {
-        return itemRestService.getListSiItem();
     }
 }
