@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api")
 public class CabangRestController {
     @Autowired
     private CabangRestService cabangRestService;
@@ -30,6 +30,19 @@ public class CabangRestController {
     public ResponseEntity getCabangById() {
         List<CabangModel> listCabang = cabangRestService.getListCabang();
         return listCabang != null ? ResponseEntity.ok(listCabang) : new ResponseEntity(HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping(path="/cabang/request")
+    private CabangModel createCabang(@Valid @RequestBody CabangModel cabang, BindingResult bindingResult) {
+        if (bindingResult.hasFieldErrors()) {
+            throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST, "Request body has invalid or missing field"
+            );
+
+        } else {
+            cabang.setStatus(0);
+            return cabangRestService.requestCreateCabang(cabang);
+        }
     }
 
 }
