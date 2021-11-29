@@ -24,6 +24,11 @@ public class CabangServiceImpl implements CabangService {
 //    ItemCabangDb itemCabangDb;
 
     @Override
+    public void addCabang(CabangModel cabang){
+        cabangDb.save(cabang);
+    }
+
+    @Override
     public CabangModel getCabangByIdCabang(int id) {
         Optional<CabangModel> cabang = cabangDb.findById(id);
         if (cabang.isPresent()) {
