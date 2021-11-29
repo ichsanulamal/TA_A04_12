@@ -56,5 +56,5 @@ public class ItemCabangModel implements Serializable {
     private CabangModel cabang;
 
     @Column(name = "id_promo")
-    private int idPromo;
+    private Integer idPromo;
 }

@@ -51,7 +51,7 @@
                             <td th:text="${item.harga}"></td>
                             <td th:text="${item.stok}"></td>
                             <td th:text="${item.kategori}"></td>
-                            <td><a class="btn btn-success" href="#">Terapkan Promo</a></td>
+                            <td th:if="${item.idPromo == null}"><a class="btn btn-success" href="#">Terapkan Promo</a></td>
                             <td><a class="btn btn-danger" th:href="@{/item/delete/} + ${item.id}">Hapus Item</a></td>
                         </tr>
                         </tbody>
@@ -61,8 +61,7 @@
             </div>
         </div>
     </div>
-<!--    <a class="btn btn-primary" th:href="@{/pegawai/add/} + ${cabang.noCabang}">Tambah Pegawai</a>-->
-<!--    <a class="btn btn-primary" href="/cabang/viewall">Kembali</a>-->
+    <a class="btn btn-primary mb-3" href="/cabang/viewall">Kembali</a>
 </div>
 
 </body>

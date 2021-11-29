@@ -4,12 +4,15 @@ import apap.tugas.siretail.model.CabangModel;
 import apap.tugas.siretail.model.ItemCabangModel;
 import apap.tugas.siretail.model.UserModel;
 import apap.tugas.siretail.service.CabangService;
+import apap.tugas.siretail.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
+import java.security.Principal;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +28,9 @@ public class CabangController {
     @Qualifier("cabangServiceImpl")
     @Autowired
     private CabangService cabangService;
+
+    @Autowired
+    private UserService userService;
 
 //    @PostMapping(value = "/cabang/add", params = {"addRow"})
 //    public String addRowCabangMultiple(
@@ -57,6 +63,26 @@ public class CabangController {
 //        model.addAttribute("listMenuExisting", listMenu);
 //        return "form-add-cabang";
 //    }
+    @GetMapping("/cabang/add") 
+    public String addCabangForm(Model model) {
+        model.addAttribute("cabang", new CabangModel());
+        return "form-add-cabang";
+    }
+
+    @PostMapping("/cabang/add")
+    public String addCabangSubmit(@ModelAttribute CabangModel cabang, HttpServletRequest request, Model model) {
+        Principal principal = request.getUserPrincipal();
+        UserModel currentUser = userService.findUserByUsername(principal.getName());
+        
+        cabang.setPenanggungJawab(currentUser);
+        cabang.setStatus(2); // status cabang 2 = DISETUJUI
+
+        cabangService.addCabang(cabang);
+        model.addAttribute("cabang", cabang);
+        model.addAttribute("msg", 1);
+        return "form-add-cabang";
+    }
+    
 
     @GetMapping("/cabang/view/{id}")
     public String viewDetailCabang(
