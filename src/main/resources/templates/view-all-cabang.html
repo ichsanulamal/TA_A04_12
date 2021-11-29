@@ -8,13 +8,13 @@
 
 	<body>
 		<nav th:replace="fragments/fragment :: navbar('Cabang')"></nav>
-		<div class="container">
+		<div class="container p-4 justify-content-center">
 			<h2>Daftar Seluruh Cabang SI-RETAIL</h2>
 			<br />
 			<div class="card m-4 p-4">
 				<div class="card-body">
 					<div class="justify-content-center">
-						<table class="table">
+						<table class="table text-center">
 							<thead>
 								<tr>
                                     <th>No</th>
@@ -68,6 +68,7 @@
 			</div>
 
 			<a class="btn btn-primary" href="/">Home</a>
+			<a sec:authorize="hasAnyAuthority('Kepala Retail', 'Manager Cabang')" th:href="@{/cabang/add}" class="mx-2 btn btn-outline-primary">Tambah Cabang Baru</a>
 		</div>
 	</body>
 </html>
