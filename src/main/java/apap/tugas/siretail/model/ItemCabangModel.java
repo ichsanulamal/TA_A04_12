@@ -31,20 +31,17 @@ public class ItemCabangModel implements Serializable {
     @Column(name = "uuid_item")
     private String itemID;
 
-//    @NotNull
     @Size(max = 50)
     @Column(name = "nama")
     private String nama;
 
-//    @NotNull
     @Column(name = "harga")
     private int harga;
 
     @NotNull
-    @Column(name = "stok", nullable = false)
+    @Column(name = "stok")
     private int stok;
 
-//    @NotNull
     @Size(max = 100)
     @Column(name = "kategori")
     private String kategori;

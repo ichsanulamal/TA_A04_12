@@ -6,6 +6,7 @@
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
 <body>
+<nav th:replace="fragments/fragment :: navbar('Item Cabang')"></nav>
 <div class="container">
     <div class="card m-4 p-4">
         <div class="justify-content-center">
@@ -35,7 +36,7 @@
                         <td>
                             <input name="stok"
                                    th:field="*{listSiItem[__${iterationStatus.index}__].stok}"
-                                   class="form-check" type="number" min="1" required>
+                                   class="form-check" type="number" min="0" required>
                         </td>
                         <td>
                             <button th:value="${iterationStatus.index}" class="btn btn-danger" type="submit"
@@ -44,8 +45,10 @@
                     </tr>
                     </tbody>
                 </table>
+                <br><br>
+                <h4 th:text="${notif}"></h4>
                 <button class="btn btn-primary" type="submit" name="save">Submit</button>
-                <a class="btn btn-primary" href="/">Cancel</a>
+                <a class="btn btn-primary" th:href="@{/cabang/view/__${idCabang}__}">Cancel</a>
             </form>
         </div>
     </div>
