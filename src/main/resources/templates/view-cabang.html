@@ -10,6 +10,17 @@
 <body>
 <nav th:replace="fragments/fragment :: navbar('Cabang')"></nav>
 <div class="container">
+    <div class="row justify-content-md-center">
+        <div th:unless="${notifAddItem} == null" class="card text-white bg-success m-4 w-75">
+            <div class="card-body">
+                <p class="card-text">Notifikasi</p>
+                <ul th:each="notifItem : ${notifAddItem}">
+                    <li th:text="${notifItem}"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
     <div class="card m-4 p-4">
         <div class="card-body">
             <div class="justify-content-center">
@@ -29,7 +40,7 @@
                 </p>
                 <p><span th:text="'Ukuran : ' + ${cabang.ukuran}"></span><span> m<sup>2</sup></span></p>
                 <p th:text="'Penanggung Jawab : ' + ${cabang.penanggungJawab.name}"></p>
-                <a class="btn btn-primary float-right mb-3" href="#">Tambah Item</a>
+                <a class="btn btn-primary float-right mb-3" th:href="@{/item/__${cabang.id}__/add}">Tambah Item</a>
                 <div>
                     <table class="table">
                         <thead>
