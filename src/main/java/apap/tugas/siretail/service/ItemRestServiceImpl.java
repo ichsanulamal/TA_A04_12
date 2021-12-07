@@ -9,8 +9,6 @@ import apap.tugas.siretail.rest.SiItemModel;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -35,31 +33,33 @@ public class ItemRestServiceImpl implements ItemRestService {
     }
 
     @Override
-    public void addItem(int idCabang, SiItemModel item) {
-        SiItemModel siItemModel = getSiItemModel(item.getUuid());
+    public Object addItem(int idCabang, SiItemModel itemAdd) {
+        SiItemModel siItemModel = getSiItemModel(itemAdd.getUuid());
         System.out.println(siItemModel.getStok());
-        System.out.println(item.getStok());
-        if (item.getStok() > siItemModel.getStok()) {
-            return;
+        System.out.println(itemAdd.getStok());
+        if (itemAdd.getStok() > siItemModel.getStok()) {
+            return siItemModel;
         }
 
-        ItemCabangModel itemCabang = itemCabangDb.getByItemID(item.getUuid());
-        if ( itemCabang != null ) {
-            itemCabang.setStok(itemCabang.getStok() + item.getStok());
+        CabangModel cabang = cabangDb.getById(idCabang);
+        ItemCabangModel itemCabang = itemCabangDb.getItemCabangModelByItemIDAndAndCabang(itemAdd.getUuid(), cabang);
+        if (itemCabang != null) {
+            itemCabang.setStok(itemCabang.getStok() + itemAdd.getStok());
             itemCabangDb.save(itemCabang);
         } else {
             itemCabang = new ItemCabangModel();
 
-            CabangModel cabang = cabangDb.getById(idCabang);
             itemCabang.setCabang(cabang);
-            itemCabang.setItemID(item.getUuid());
-            itemCabang.setStok(item.getStok());
+            itemCabang.setItemID(itemAdd.getUuid());
+            itemCabang.setStok(itemAdd.getStok());
 
             itemCabang.setNama(siItemModel.getNama());
             itemCabang.setHarga(siItemModel.getHarga());
             itemCabang.setKategori(siItemModel.getKategori());
 
             itemCabangDb.save(itemCabang);
+
+            System.out.println("masuk sini bro");
         }
         // post
 //        siItemModel.setStok(siItemModel.getStok() - item.getStok());
@@ -70,7 +70,7 @@ public class ItemRestServiceImpl implements ItemRestService {
 //                .retrieve()
 //                .bodyToMono(Map.class).block());
         // put
-        int stokSiItem = siItemModel.getStok() - item.getStok();
+        int stokSiItem = siItemModel.getStok() - itemAdd.getStok();
         HashMap reqBody = new HashMap<>();
         reqBody.put("stok", stokSiItem);
 
@@ -81,6 +81,7 @@ public class ItemRestServiceImpl implements ItemRestService {
                 .retrieve()
                 .bodyToMono(HashMap.class)
                 .block());
+        return itemCabang;
     }
 
     @Override
@@ -119,7 +120,6 @@ public class ItemRestServiceImpl implements ItemRestService {
             System.out.println(ex);
         }
         return null;
-
     }
 
 }

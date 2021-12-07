@@ -1,18 +1,25 @@
 package apap.tugas.siretail.controller;
 
+import apap.tugas.siretail.model.CabangModel;
 import apap.tugas.siretail.model.ItemCabangModel;
 import apap.tugas.siretail.repository.ItemCabangDb;
+import apap.tugas.siretail.model.UserModel;
 import apap.tugas.siretail.rest.CouponRestModel;
 import apap.tugas.siretail.rest.ListSiItemModel;
 import apap.tugas.siretail.rest.SiItemModel;
-import apap.tugas.siretail.service.CouponRestService;
-import apap.tugas.siretail.service.ItemCabangService;
-import apap.tugas.siretail.service.ItemRestService;
+import apap.tugas.siretail.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,13 +32,25 @@ public class ItemController {
     private ItemCabangService itemCabangService;
 
     @Autowired
+    private CabangService cabangService;
+
+    @Autowired
+    private UserService userService;
+
+
+    @Autowired
     private CouponRestService couponRestService;
 
     @Autowired
     private ItemCabangDb itemCabangDb;
-
+    
+//    @PreAuthorize("hasAuthority('Kepala Retail') or hasAuthority('Manager Cabang')")
     @GetMapping("/item/{idCabang}/add")
     public String addItemForm(Model model, @PathVariable Integer idCabang) {
+        if (!isAuthorizedAddItem(idCabang)) {
+            return "error/401";
+        }
+
         List<SiItemModel> listItem = itemRestService.getListItemFromSiItem();
         model.addAttribute("listItem", listItem);
 
@@ -48,12 +67,24 @@ public class ItemController {
     public String addItemSubmit(
             @ModelAttribute ListSiItemModel listAddItem,
             @PathVariable Integer idCabang,
-            Model model
+            RedirectAttributes redirectAttributes
     ) {
-        for (SiItemModel siItem: listAddItem.getListSiItem()) {
-            itemRestService.addItem(idCabang, siItem);
+        if (!isAuthorizedAddItem(idCabang)) {
+            return "error/401";
         }
-        return "add-item";
+
+        List<String> notif = new ArrayList<>();
+        for (SiItemModel siItem: listAddItem.getListSiItem()) {
+            Object addItemObject = itemRestService.addItem(idCabang, siItem);
+            if (addItemObject instanceof ItemCabangModel) {
+                notif.add("Berhasil menambahkan item " + ((ItemCabangModel) addItemObject).getNama() + " sebanyak " + siItem.getStok());
+            } else {
+                notif.add("Gagal menambahkan item " + ((SiItemModel) addItemObject).getNama() + ", mohon periksa kembali stok Si-Item");
+            }
+        }
+        redirectAttributes.addFlashAttribute("notifAddItem", notif);
+
+        return "redirect:/cabang/view/" + idCabang;
     }
 
     @PostMapping(value = "/item/{idCabang}/add", params = {"addRow"})
@@ -62,6 +93,7 @@ public class ItemController {
             @PathVariable Integer idCabang,
             Model model
     ) {
+
         List<SiItemModel> listItem = itemRestService.getListItemFromSiItem();
         model.addAttribute("listItem", listItem);
 
@@ -83,10 +115,13 @@ public class ItemController {
         List<SiItemModel> listItem = itemRestService.getListItemFromSiItem();
         model.addAttribute("listItem", listItem);
 
-        Integer rowId = Integer.valueOf(row);
-        listAddItem.getListSiItem().remove(rowId.intValue());
-
-        model.addAttribute("listItem", listItem);
+        if (listAddItem.getListSiItem().size() > 1) {
+            Integer rowId = Integer.valueOf(row);
+            listAddItem.getListSiItem().remove(rowId.intValue());
+        } else {
+            model.addAttribute("notif", "Anda perlu menambahkan minimal 1 item");
+        }
+        model.addAttribute("listAddItem", listAddItem);
         return "form-add-item";
     }
 
@@ -116,5 +151,21 @@ public class ItemController {
         item.setHarga((int) (item.getHarga() - item.getHarga()*(discountAmount/100.0)));
         itemCabangDb.save(item);
         return "redirect:/cabang/view/" + cabangId;
+    }
+
+    private boolean isAuthorizedAddItem(int idCabang) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            String role = ((UserDetails) principal).getAuthorities().toArray()[0].toString();
+            if (role.equals("Kepala Retail")) return true;
+            else if (role.equals("Manager Cabang"))  {
+                CabangModel cabang = cabangService.getCabangByIdCabang(idCabang);
+                String username = ((UserDetails)principal).getUsername();
+                if (cabang.getPenanggungJawab().getUsername().equals(username)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
