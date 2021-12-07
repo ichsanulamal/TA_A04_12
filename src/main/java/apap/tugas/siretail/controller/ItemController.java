@@ -3,6 +3,8 @@ package apap.tugas.siretail.controller;
 import apap.tugas.siretail.model.CabangModel;
 import apap.tugas.siretail.model.ItemCabangModel;
 import apap.tugas.siretail.model.UserModel;
+import apap.tugas.siretail.repository.ItemCabangDb;
+import apap.tugas.siretail.model.UserModel;
 import apap.tugas.siretail.rest.CouponRestModel;
 import apap.tugas.siretail.rest.ListSiItemModel;
 import apap.tugas.siretail.rest.SiItemModel;
@@ -39,6 +41,9 @@ public class ItemController {
 
     @Autowired
     private CouponRestService couponRestService;
+
+    @Autowired
+    private ItemCabangDb itemCabangDb;
 
 //    @PreAuthorize("hasAuthority('Kepala Retail') or hasAuthority('Manager Cabang')")
     @GetMapping("/item/{idCabang}/add")
@@ -138,13 +143,14 @@ public class ItemController {
         return "viewall-coupon";
     }
 
-    @GetMapping("/item/coupon/{idItem}/{couponCode}")
-    public String calculateCoupon(@PathVariable int idItem, @PathVariable int couponCode, Model model) {
+    @GetMapping("/item/coupon/{idItem}/{idCoupon}/{discountAmount}")
+    public String calculateCoupon(@PathVariable int idItem, @PathVariable int idCoupon, @PathVariable double discountAmount, Model model) {
         ItemCabangModel item = itemCabangService.getItemCabangById(idItem);
         int cabangId = item.getCabang().getId();
 
-        item.setIdPromo(couponCode);
-        item.setHarga(item.getHarga() - item.getIdPromo());
+        item.setIdPromo(idCoupon);
+        item.setHarga((int) (item.getHarga() - item.getHarga()*(discountAmount/100.0)));
+        itemCabangDb.save(item);
         return "redirect:/cabang/view/" + cabangId;
     }
 
