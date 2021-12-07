@@ -16,8 +16,8 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
 @Getter
+@Setter
 @Entity
 @Table(name = "role")
 public class RoleModel implements Serializable {
