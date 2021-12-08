@@ -15,13 +15,14 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http// .csrf().disable() untuk testing webservice POST. Kalo kelompok sebelah udah jadi dihapus
                 .authorizeRequests()
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/user/add").hasAnyAuthority("Kepala Retail")
                 .antMatchers("cabang/**").hasAnyAuthority("Kepala Retail", "Manager Cabang")
                 .antMatchers("/user/edit/**").hasAnyAuthority("Kepala Retail", "Manager Cabang")
+                .antMatchers("/item/coupon/**").hasAnyAuthority("Kepala Retail", "Manager Cabang")
                 .antMatchers("/api/**").permitAll()
                 .anyRequest().authenticated()
                 .and()

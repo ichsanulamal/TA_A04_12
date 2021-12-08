@@ -7,4 +7,5 @@ import java.util.List;
 public interface CabangRestService {
     CabangModel getCabangById(int id);
     List<CabangModel> getListCabang();
+    CabangModel requestCreateCabang(CabangModel cabang);
 }
