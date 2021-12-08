@@ -39,7 +39,8 @@
                     <span th:text="'Status: Disetujui'"></span>
                 </p>
                 <p><span th:text="'Ukuran : ' + ${cabang.ukuran}"></span><span> m<sup>2</sup></span></p>
-                <p th:text="'Penanggung Jawab : ' + ${cabang.penanggungJawab.name}"></p>
+                <p th:if="${cabang.penanggungJawab == null}">Penanggung Jawab : -</p>
+                <p th:unless="${cabang.penanggungJawab == null}" th:text="'Penanggung Jawab : ' + ${cabang.penanggungJawab.name}"></p>
                 <a class="btn btn-primary float-right mb-3" th:href="@{/item/__${cabang.id}__/add}">Tambah Item</a>
                 <div>
                     <table class="table">

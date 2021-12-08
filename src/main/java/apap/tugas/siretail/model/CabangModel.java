@@ -35,7 +35,6 @@ public class CabangModel implements Serializable {
     private String alamat;
 
     @NotNull
-    @JsonIgnore
     @Column(name = "ukuran", nullable = false)
     private int ukuran;
 
@@ -45,7 +44,6 @@ public class CabangModel implements Serializable {
     private int status;
 
     @NotNull
-    @JsonIgnore
     @Size(max=20)
     @Column(name="no_telp", nullable = false)
     private String noTelepon;
