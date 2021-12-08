@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <title>Si-Retail</title>
@@ -10,6 +10,17 @@
 <body>
 <nav th:replace="fragments/fragment :: navbar('Cabang')"></nav>
 <div class="container">
+    <div class="row justify-content-md-center">
+        <div th:unless="${notifAddItem} == null" class="card text-white bg-success m-4 w-75">
+            <div class="card-body">
+                <p class="card-text">Notifikasi</p>
+                <ul th:each="notifItem : ${notifAddItem}">
+                    <li th:text="${notifItem}"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
     <div class="card m-4 p-4">
         <div class="card-body">
             <div class="justify-content-center">
@@ -30,7 +41,7 @@
                 <p><span th:text="'Ukuran : ' + ${cabang.ukuran}"></span><span> m<sup>2</sup></span></p>
                 <p th:if="${cabang.penanggungJawab == null}">Penanggung Jawab : -</p>
                 <p th:unless="${cabang.penanggungJawab == null}" th:text="'Penanggung Jawab : ' + ${cabang.penanggungJawab.name}"></p>
-                <a class="btn btn-primary float-right mb-3" href="#">Tambah Item</a>
+                <a class="btn btn-primary float-right mb-3" th:href="@{/item/__${cabang.id}__/add}">Tambah Item</a>
                 <div>
                     <table class="table">
                         <thead>
@@ -52,7 +63,10 @@
                             <td th:text="${item.harga}"></td>
                             <td th:text="${item.stok}"></td>
                             <td th:text="${item.kategori}"></td>
-                            <td th:if="${item.idPromo == null}"><a class="btn btn-success" href="#">Terapkan Promo</a></td>
+                            <div sec:authorize="hasAnyAuthority('Kepala Retail', 'Manajer Cabang')" class=" my-3 d-flex justify-content-center">
+                                <td th:if="${item.idPromo == null}"><a class="btn btn-success" th:href="@{/item/coupon/} + ${item.id}">Terapkan Promo</a></td>
+                                <td th:if="${item.idPromo != null}"></td>
+                            </div>
                             <td><a class="btn btn-danger" th:href="@{/item/delete/} + ${item.id}">Hapus Item</a></td>
                         </tr>
                         </tbody>

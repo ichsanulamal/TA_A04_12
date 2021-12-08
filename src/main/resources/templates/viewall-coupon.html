@@ -31,7 +31,7 @@
             <td class="text-center" th:text="${coupon.couponName}"></td>
             <td class="text-center" th:text="${coupon.discountAmount}"></td>
             <td class="text-center" th:text="${coupon.expiryDate}"></td>
-            <td class="text-center"><a class="btn btn-primary text-center" href="/">Pilih</a></td>
+            <td class="text-center"><a class="btn btn-primary text-center" th:href="@{/item/coupon/} + ${item.id} + @{/} + ${coupon.idCoupon} + @{/} + ${coupon.discountAmount}">Pilih</a></td>
 
         </tr>
         </tbody>

@@ -16,8 +16,8 @@ import java.io.Serializable;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
 @Getter
+@Setter
 @Entity
 @Table(name = "user_siretail")
 public class UserModel implements Serializable {

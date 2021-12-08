@@ -12,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CouponRestModel {
-    int id;
+    int idCoupon;
     String couponCode;
     String couponName;
     Double discountAmount;
