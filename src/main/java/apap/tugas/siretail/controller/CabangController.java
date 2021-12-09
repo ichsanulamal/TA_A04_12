@@ -151,11 +151,11 @@ public class CabangController {
     ) {
         List<CabangModel> permintaanCabang = cabangService.getAllCabang();
 
-        for (CabangModel cabang: permintaanCabang) {
-            if (cabang.getStatus() != 0) {
-                permintaanCabang.remove(cabang);
-            }
-        }
+//        for (CabangModel cabang: permintaanCabang) {
+//            if (cabang.getStatus() != 0) {
+//                permintaanCabang.remove(cabang);
+//            }
+//        }
         model.addAttribute("permintaanCabang", permintaanCabang);
         return "view-permintaan-cabang";
     }
