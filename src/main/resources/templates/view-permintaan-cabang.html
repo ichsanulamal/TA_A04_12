@@ -39,7 +39,7 @@
                         <td th:text="'Menunggu Persetujuan'"></td>
                         <td>
                             <a
-                                    class="btn btn-primary"
+                                    th:class="${'btn btn-primary'}"
                                     th:href="@{/cabang/view/} + ${cabang.id}"
                             >Menyetujui</a
                             >
