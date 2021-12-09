@@ -2,16 +2,16 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>404 not found</title>
+    <title>500 internal error</title>
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 
 </head>
 <body>
-<nav th:replace="fragments/fragment :: navbar('404')"></nav>
+<nav th:replace="fragments/fragment :: navbar('500')"></nav>
 <div class="container-fluid">
-    <h2>Error 404: not found</h2>
-    <p>Halaman yang anda cari tidak ditemukan</p>
+    <h2>Error 500: Internal server error</h2>
+    <p>Terdapat masalah pada server</p>
     <a th:href="@{/}">Kembali ke home</a>
 </div>
 </body>

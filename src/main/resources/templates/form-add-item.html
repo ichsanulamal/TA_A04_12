@@ -15,7 +15,8 @@
             <form th:action="@{/item/__${idCabang}__/add}" th:object="${listAddItem}" method="POST">
                 <table class="table">
                     <thead>
-                    <th>Nama Menu</th>
+                    <th>Nama Item</th>
+                    <th>Stok</th>
                     <th>
                         <button class="btn btn-primary" type="submit" name="addRow">Tambah Row</button>
                     </th>
@@ -28,7 +29,7 @@
                                     class="form-control">
                                 <div th:each="item, iterationStatus2 : ${listItem}">
                                     <option th:value="${item.uuid}"
-                                            th:text="${item.nama} + ' <' + ${item.stok} + '>'">
+                                            th:text="${item.nama} + ' [' + ${item.stok} + ']'">
                                     </option>
                                 </div>
                             </select>
@@ -47,6 +48,12 @@
                 </table>
                 <br><br>
                 <h4 th:text="${notif}"></h4>
+                <p>*Keterangan</p>
+                <ul>
+                    <li><p><b>Stok</b> yang diisi merupakan stok item yang ingin ditambahkan ke cabang</p></li>
+                    <li><p><b>[jumlah]</b> pada <b>Nama Item</b> merupakan jumlah stok maksimal yang dapat ditambahkan ke cabang</p></li>
+                </ul>
+
                 <button class="btn btn-primary" type="submit" name="save">Submit</button>
                 <a class="btn btn-primary" th:href="@{/cabang/view/__${idCabang}__}">Cancel</a>
             </form>
