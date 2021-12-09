@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -149,7 +150,14 @@ public class CabangController {
             Model model
     ) {
         List<CabangModel> listCabang = cabangService.getAllCabang();
-        model.addAttribute("listCabang", listCabang);
+        List<CabangModel> permintaanCabang = Collections.<CabangModel>emptyList();
+
+        for (CabangModel cabang: listCabang) {
+            if (cabang.getStatus() == 0) {
+                permintaanCabang.add(cabang);
+            }
+        }
+        model.addAttribute("permintaanCabang", permintaanCabang);
         return "view-permintaan-cabang";
     }
 }
