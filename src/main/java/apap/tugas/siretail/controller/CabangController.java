@@ -149,12 +149,11 @@ public class CabangController {
     public String permintaanCabang(
             Model model
     ) {
-        List<CabangModel> listCabang = cabangService.getAllCabang();
-        List<CabangModel> permintaanCabang = Collections.<CabangModel>emptyList();
+        List<CabangModel> permintaanCabang = cabangService.getAllCabang();
 
-        for (CabangModel cabang: listCabang) {
-            if (cabang.getStatus() == 0) {
-                permintaanCabang.add(cabang);
+        for (CabangModel cabang: permintaanCabang) {
+            if (cabang.getStatus() != 0) {
+                permintaanCabang.remove(cabang);
             }
         }
         model.addAttribute("permintaanCabang", permintaanCabang);
