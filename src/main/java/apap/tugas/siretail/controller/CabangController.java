@@ -1,7 +1,6 @@
 package apap.tugas.siretail.controller;
 
 import apap.tugas.siretail.model.CabangModel;
-import apap.tugas.siretail.model.ItemCabangModel;
 import apap.tugas.siretail.model.UserModel;
 import apap.tugas.siretail.service.CabangService;
 import apap.tugas.siretail.service.UserService;
@@ -13,12 +12,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
 import java.security.Principal;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+
 import org.springframework.security.core.Authentication;
 
 @SuppressWarnings("ALL")
@@ -144,6 +142,15 @@ public class CabangController {
         model.addAttribute("cabang", cabang);
         model.addAttribute("msg", 1);
         return "form-update-cabang";
+    }
+
+    @GetMapping("/cabang/permintaan-cabang")
+    public String permintaanCabang(
+            Model model
+    ) {
+        List<CabangModel> listCabang = cabangService.getAllCabang();
+        model.addAttribute("listCabang", listCabang);
+        return "view-permintaan-cabang";
     }
 }
 

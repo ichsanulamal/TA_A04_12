@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<head>
 		<title>Semua Cabang</title>
 		<object th:include="fragments/fragment :: css" th:remove="tag"></object>
@@ -68,6 +68,7 @@
 			</div>
 
 			<a class="btn btn-primary" href="/">Home</a>
+			<a class="btn btn-primary" href="/">Permintaan Cabang</a>
 			<a sec:authorize="hasAnyAuthority('Kepala Retail', 'Manager Cabang')" th:href="@{/cabang/add}" class="mx-2 btn btn-outline-primary">Tambah Cabang Baru</a>
 		</div>
 	</body>
