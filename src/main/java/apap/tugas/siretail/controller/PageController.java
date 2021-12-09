@@ -12,10 +12,6 @@ import java.util.Collection;
 public class PageController {
     @RequestMapping("/")
     private String home() {
-        Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>)
-                SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-        System.out.println(authorities);
-
         return "home";
     }
 

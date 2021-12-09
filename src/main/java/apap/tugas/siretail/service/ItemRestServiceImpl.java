@@ -35,8 +35,6 @@ public class ItemRestServiceImpl implements ItemRestService {
     @Override
     public Object addItem(int idCabang, SiItemModel itemAdd) {
         SiItemModel siItemModel = getSiItemModel(itemAdd.getUuid());
-        System.out.println(siItemModel.getStok());
-        System.out.println(itemAdd.getStok());
         if (itemAdd.getStok() > siItemModel.getStok()) {
             return siItemModel;
         }
@@ -58,12 +56,9 @@ public class ItemRestServiceImpl implements ItemRestService {
             itemCabang.setKategori(siItemModel.getKategori());
 
             itemCabangDb.save(itemCabang);
-
-            System.out.println("masuk sini bro");
         }
         // post
 //        siItemModel.setStok(siItemModel.getStok() - item.getStok());
-//        System.out.println(this.webClient
 //                .post()
 //                .uri("/")
 //                .body(Mono.just(item), SiItemModel.class)
@@ -95,7 +90,6 @@ public class ItemRestServiceImpl implements ItemRestService {
             LinkedHashMap itemMap = (LinkedHashMap) (res.get("result"));
             ObjectMapper mapper = new ObjectMapper();
             SiItemModel item = mapper.convertValue(itemMap, SiItemModel.class);
-            System.out.println(item);
             return item;
         } catch (Exception ex) {
             System.out.println(ex);
