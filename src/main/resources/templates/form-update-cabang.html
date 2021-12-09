@@ -21,8 +21,12 @@
       
       <h2>Update Cabang Baru</h2>
       <br>
+      
       <form th:action="@{/cabang/update/}" th:object="${cabang}" method="POST">
         <input type="hidden" th:field="*{id}" />
+        <input type="hidden" th:field="*{status}" />
+        <input type="hidden" th:field="*{penanggungJawab.id}"/>
+      
 
         <label>Nama Cabang</label>
         <input type="text" name="nama" class="form-control" th:value="*{nama}"/>
@@ -38,14 +42,6 @@
 
         <label>Ukuran</label>
         <input type="number" name="ukuran" class="form-control" th:value="*{ukuran}">
-        <br>
-
-        <label>Status</label>
-        <input type="number" name="status" class="form-control disabled" th:value="*{status}" disabled>
-        <br>
-
-        <label>Penanggung Jawab</label>
-        <input type="text" name="penanggungJawab" class="form-control disabled" th:value="*{penanggungJawab}" disabled>
         <br>
 
         <button type="submit" class="btn btn-primary">Submit</button>
