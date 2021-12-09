@@ -147,6 +147,7 @@ public class CabangController {
     public String updateCabangSubmit(
             @ModelAttribute CabangModel cabang,
             Model model
+            
     ) {
         cabangService.updateCabang(cabang);
         model.addAttribute("cabang", cabang);
