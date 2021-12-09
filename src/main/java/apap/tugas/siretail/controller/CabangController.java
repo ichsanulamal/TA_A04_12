@@ -5,6 +5,7 @@ import apap.tugas.siretail.model.UserModel;
 import apap.tugas.siretail.repository.CabangDb;
 import apap.tugas.siretail.service.CabangService;
 import apap.tugas.siretail.service.UserService;
+import apap.tugas.siretail.controller.PageController;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -109,6 +110,10 @@ public class CabangController {
             listCabang = cabangService.getAllCabang();
         }
         model.addAttribute("listCabang", listCabang);
+
+        //izin nambahin buat code gw
+        PageController.msg = 0;
+
         return "view-all-cabang";
     }
 
@@ -161,6 +166,7 @@ public class CabangController {
                 permintaanCabang.add(cabang);
             }
         }
+        model.addAttribute("msg", PageController.msg);
         model.addAttribute("permintaanCabang", permintaanCabang);
         return "view-permintaan-cabang";
     }
@@ -179,19 +185,9 @@ public class CabangController {
        cabang.setPenanggungJawab(currentUser);
        cabangDb.save(cabang);
 
+        PageController.msg = 1;
 
-       model.addAttribute("msg", 1);
-        List<CabangModel> listCabang = cabangService.getAllCabang();
-        List<CabangModel> permintaanCabang = new ArrayList<>();
-
-        for (CabangModel cabangLama: listCabang) {
-            if (cabangLama.getStatus() == 0) {
-                permintaanCabang.add(cabangLama);
-            }
-        }
-        model.addAttribute("permintaanCabang", permintaanCabang);
-
-        return "view-permintaan-cabang";
+        return "redirect:/cabang/permintaan-cabang";
     }
 
     @GetMapping("/cabang/tolak-permintaan/{id}")
@@ -204,19 +200,9 @@ public class CabangController {
         cabangService.deleteCabang(cabang);
 
 
-        model.addAttribute("msg", 2);
+        PageController.msg = 2;
 
-        List<CabangModel> listCabang = cabangService.getAllCabang();
-        List<CabangModel> permintaanCabang = new ArrayList<>();
-
-        for (CabangModel cabangLama: listCabang) {
-            if (cabangLama.getStatus() == 0) {
-                permintaanCabang.add(cabangLama);
-            }
-        }
-        model.addAttribute("permintaanCabang", permintaanCabang);
-
-        return "view-permintaan-cabang";
+        return "redirect:/cabang/permintaan-cabang";
     }
 }
 
