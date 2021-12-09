@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <title>Si-Retail</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar('Cabang')"></nav>
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div th:if="${msg == 1}" class="card text-white bg-success m-4 w-75">
+            <div class="card-body">
+                <p class="card-text">Cabang berhasil dibuat!</p>
+            </div>
+        </div>
+    </div>
+  <div class="card m-4 p-4">
+    <div class="justify-content-center">
+      
+      
+      <h2>Request Update Stok Item</h2>
+      <br>
+      <form th:action="@{/cabang/add}" method="POST">
+        <label>Nama Item</label>
+        <input type="text" name="nama" class="form-control"/>
+        <br>
+
+        <label>Jumlah Stok</label>
+        <input type="number" name="jumlah_stok" class="form-control"/>
+        <br>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a class="m-2 btn btn-danger" href="/cabang/viewall">Cancel</a>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>

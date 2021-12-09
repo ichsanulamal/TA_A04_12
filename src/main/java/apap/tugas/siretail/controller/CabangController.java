@@ -155,6 +155,13 @@ public class CabangController {
         return "form-update-cabang";
     }
 
+    @GetMapping("/request-item")
+    public String requestStokItemForm(
+            Model model
+    ) {
+        return "form-update-stok-item";
+    }
+
     @GetMapping("/cabang/permintaan-cabang")
     public String permintaanCabang(
             Model model
