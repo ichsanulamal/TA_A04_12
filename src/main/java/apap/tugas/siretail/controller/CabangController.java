@@ -82,6 +82,7 @@ public class CabangController {
         model.addAttribute("msg", 1);
         return "form-add-cabang";
     }
+
     
 
     @GetMapping("/cabang/view/{id}")
@@ -140,8 +141,9 @@ public class CabangController {
             Model model
     ) {
         cabangService.updateCabang(cabang);
-        model.addAttribute("noCabang", cabang.getId());
-        return "update-cabang";
+        model.addAttribute("cabang", cabang);
+        model.addAttribute("msg", 1);
+        return "form-update-cabang";
     }
 }
 
