@@ -2,6 +2,7 @@ package apap.tugas.siretail.controller;
 
 import apap.tugas.siretail.model.CabangModel;
 import apap.tugas.siretail.model.UserModel;
+import apap.tugas.siretail.repository.CabangDb;
 import apap.tugas.siretail.service.CabangService;
 import apap.tugas.siretail.service.UserService;
 
@@ -30,6 +31,9 @@ public class CabangController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CabangDb cabangDb;
 
 //    @PostMapping(value = "/cabang/add", params = {"addRow"})
 //    public String addRowCabangMultiple(
@@ -149,14 +153,69 @@ public class CabangController {
     public String permintaanCabang(
             Model model
     ) {
-        List<CabangModel> permintaanCabang = cabangService.getAllCabang();
+        List<CabangModel> listCabang = cabangService.getAllCabang();
+        List<CabangModel> permintaanCabang = new ArrayList<>();
 
-//        for (CabangModel cabang: permintaanCabang) {
-//            if (cabang.getStatus() != 0) {
-//                permintaanCabang.remove(cabang);
-//            }
-//        }
+        for (CabangModel cabang: listCabang) {
+            if (cabang.getStatus() == 0) {
+                permintaanCabang.add(cabang);
+            }
+        }
         model.addAttribute("permintaanCabang", permintaanCabang);
+        return "view-permintaan-cabang";
+    }
+
+    @GetMapping("/cabang/setuju-permintaan/{id}")
+    public String setujuPermintaan(
+            @PathVariable int id,
+            HttpServletRequest request,
+            Model model
+    ) {
+       CabangModel cabang = cabangService.getCabangByIdCabang(id);
+       Principal principal = request.getUserPrincipal();
+       UserModel currentUser = userService.findUserByUsername(principal.getName());
+
+       cabang.setStatus(2);
+       cabang.setPenanggungJawab(currentUser);
+       cabangDb.save(cabang);
+
+
+       model.addAttribute("msg", 1);
+        List<CabangModel> listCabang = cabangService.getAllCabang();
+        List<CabangModel> permintaanCabang = new ArrayList<>();
+
+        for (CabangModel cabangLama: listCabang) {
+            if (cabangLama.getStatus() == 0) {
+                permintaanCabang.add(cabangLama);
+            }
+        }
+        model.addAttribute("permintaanCabang", permintaanCabang);
+
+        return "view-permintaan-cabang";
+    }
+
+    @GetMapping("/cabang/tolak-permintaan/{id}")
+    public String tolakPermintaan(
+            @PathVariable int id,
+            HttpServletRequest request,
+            Model model
+    ) {
+        CabangModel cabang = cabangService.getCabangByIdCabang(id);
+        cabangService.deleteCabang(cabang);
+
+
+        model.addAttribute("msg", 2);
+
+        List<CabangModel> listCabang = cabangService.getAllCabang();
+        List<CabangModel> permintaanCabang = new ArrayList<>();
+
+        for (CabangModel cabangLama: listCabang) {
+            if (cabangLama.getStatus() == 0) {
+                permintaanCabang.add(cabangLama);
+            }
+        }
+        model.addAttribute("permintaanCabang", permintaanCabang);
+
         return "view-permintaan-cabang";
     }
 }

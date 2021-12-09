@@ -10,8 +10,23 @@
 <nav th:replace="fragments/fragment :: navbar('Cabang')"></nav>
 <div class="container p-4 justify-content-center">
     <h2>Daftar Permintaan Pembukaan Cabang SI-RETAIL</h2>
+    <div class="row justify-content-md-center">
+        <div th:if="${msg == 1}" class="card text-white bg-success m-4 w-75">
+            <div class="card-body">
+                <p class="card-text">Cabang berhasil Disetujui!</p>
+            </div>
+        </div>
+        <div th:if="${msg == 2}" class="card text-white bg-success m-4 w-75">
+            <div class="card-body">
+                <p class="card-text">Cabang berhasil Ditolak!</p>
+            </div>
+        </div>
+    </div>
     <br />
-    <div class="card m-4 p-4">
+    <div th:if="${#lists.size(permintaanCabang) == 0}" class="row justify-content-md-center mb-5">
+        <h2>Belum ada Permintaan Pembukaan Cabang</h2>
+    </div>
+    <div th:if="${#lists.size(permintaanCabang) != 0}" class="card m-4 p-4">
         <div class="card-body">
             <div class="justify-content-center">
                 <table class="table text-center">
@@ -40,14 +55,14 @@
                         <td>
                             <a
                                     th:class="${'btn btn-primary'}"
-                                    th:href="@{/cabang/view/} + ${cabang.id}"
+                                    th:href="@{/cabang/setuju-permintaan/} + ${cabang.id}"
                             >Menyetujui</a
                             >
                         </td>
                         <td>
                             <a
                                     th:class="${'btn btn-danger'}"
-                                    th:href="@{/cabang/delete/} + ${cabang.id}"
+                                    th:href="@{/cabang/tolak-permintaan/} + ${cabang.id}"
                             >Menolak</a
                             >
                         </td>
