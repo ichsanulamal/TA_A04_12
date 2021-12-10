@@ -11,7 +11,7 @@
     <div class="row justify-content-md-center">
         <div th:if="${msg == 1}" class="card text-white bg-success m-4 w-75">
             <div class="card-body">
-                <p class="card-text">Cabang berhasil diupdate!</p>
+                <p class="card-text">Cabang berhasil dibuat!</p>
             </div>
         </div>
     </div>
@@ -19,29 +19,15 @@
     <div class="justify-content-center">
       
       
-      <h2>Update Cabang Baru</h2>
+      <h2>Request Update Stok Item</h2>
       <br>
-      
-      <form th:action="@{/cabang/update/}" th:object="${cabang}" method="POST">
-        <input type="hidden" th:field="*{id}" />
-        <input type="hidden" th:field="*{status}" />
-        <input type="hidden" th:field="*{penanggungJawab.id}"/>
-      
-
-        <label>Nama Cabang</label>
-        <input type="text" name="nama" class="form-control" th:value="*{nama}"/>
+      <form th:action="@{/cabang/add}" method="POST">
+        <label>Nama Item</label>
+        <input type="text" name="nama" class="form-control"/>
         <br>
 
-        <label>Alamat</label>
-        <input type="text" name="alamat" class="form-control" th:value="*{alamat}"/>
-        <br>
-
-        <label>No. Telepon Cabang</label>
-        <input type="text" name="noTelepon" class="form-control" th:value="*{noTelepon}">
-        <br>
-
-        <label>Ukuran</label>
-        <input type="number" name="ukuran" class="form-control" th:value="*{ukuran}">
+        <label>Jumlah Stok</label>
+        <input type="number" name="jumlah_stok" class="form-control"/>
         <br>
 
         <button type="submit" class="btn btn-primary">Submit</button>

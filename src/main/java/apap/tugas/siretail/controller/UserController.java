@@ -85,6 +85,9 @@ public class UserController {
     public String viewAllUser(Model model) {
         model.addAttribute("listUser", userService.retrieveAllUser());
         model.addAttribute("notif", "");
+        //izin nambahin buat code gw
+        PageController.msg = 0;
+
         return "viewall-user";
     }
 

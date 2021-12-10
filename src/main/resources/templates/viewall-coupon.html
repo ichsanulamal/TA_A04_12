@@ -29,15 +29,15 @@
             <td class="text-center" th:text="${iterationStatus.count}"></td>
             <td class="text-center" th:text="${coupon.couponCode}"></td>
             <td class="text-center" th:text="${coupon.couponName}"></td>
-            <td class="text-center" th:text="${coupon.discountAmount}"></td>
+            <td class="text-center" th:text="${coupon.discountAmount} + '%'"></td>
             <td class="text-center" th:text="${coupon.expiryDate}"></td>
             <td class="text-center"><a class="btn btn-primary text-center" th:href="@{/item/coupon/} + ${item.id} + @{/} + ${coupon.idCoupon} + @{/} + ${coupon.discountAmount}">Pilih</a></td>
 
         </tr>
         </tbody>
     </table>
-    <div class="text-center">
-        <a class="btn btn-primary text-center" href="/">Home</a>
+    <div class="mt-5">
+        <a class="btn btn-primary text-center" th:href="@{/cabang/view/} + ${idCabang}">Kembali</a>
     </div>
 </div>
 

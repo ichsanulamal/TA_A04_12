@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <title>Si-Retail</title>
+  <meta charset="UTF-8">
+  <title> Hapus Cabang </title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar('Cabang')"></nav>
+
+<div class="container">
+    <h3 class="alert alert-success mt-3"> Sukses Menghapus Cabang </h3>
+    <a href="/cabang/viewall" class="btn btn-primary"> Back </a>
+</div>
+
+
+</body>
+
+</html>

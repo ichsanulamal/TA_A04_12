@@ -132,8 +132,10 @@ public class ItemController {
     public String getListCoupon(@PathVariable int id, Model model) {
         List<CouponRestModel> listCoupon = couponRestService.getListCoupon();
         ItemCabangModel item = itemCabangService.getItemCabangById(id);
+        int idCabang = item.getCabang().getId();
         model.addAttribute("listCoupon", listCoupon);
         model.addAttribute("item", item);
+        model.addAttribute("idCabang", idCabang);
         return "viewall-coupon";
     }
 
