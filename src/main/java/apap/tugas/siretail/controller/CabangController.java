@@ -227,25 +227,19 @@ public class CabangController {
     @PostMapping("/cabang/request-item")
     public String requestItemStokSubmit(
             Model model,
-            @RequestParam("idItem") int idItem,
+            @RequestParam("idItem") String idItem,
             @RequestParam("jumlah_stok") int jumlah_stok
             
     ) {
         final String uri = "https://sifactory-a04.herokuapp.com/api/request";
-        // final String uri = "https://si-item.herokuapp.com/api/item";
-
         RestTemplate restTemplate = new RestTemplate();
         HashMap<String, Object> input = new HashMap<String, Object>();
         input.put("idItem", idItem);
         input.put("jumlah_stok", jumlah_stok);
-        // input.put("harga", idItem);
-        // input.put("kategori", jumlah_stok);
-        // input.put("nama", "string");
-        // input.put("stok", jumlah_stok);
         String result = restTemplate.postForObject(uri, HttpMethod.POST, String.class, input);
         System.out.println(result);
         model.addAttribute("msg", 1);
-        return "form-update-stok-item";
+        return "success-request";
     }
 
     
