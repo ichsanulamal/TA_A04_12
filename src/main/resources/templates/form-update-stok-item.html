@@ -21,9 +21,15 @@
       
       <h2>Request Update Stok Item</h2>
       <br>
-      <form th:action="@{/cabang/add}" method="POST">
+      <form th:action="@{/cabang/request-item}" method="POST">
         <label>Nama Item</label>
-        <input type="text" name="nama" class="form-control"/>
+        <select required class="form-control" name="idItem">
+          <div th:each="item, iterationStatus2 : ${cabang.listItem}">
+            <option th:value="${item.uuid}"
+              th:text="${item.nama}">
+            </option>
+          </div>
+        </select>
         <br>
 
         <label>Jumlah Stok</label>

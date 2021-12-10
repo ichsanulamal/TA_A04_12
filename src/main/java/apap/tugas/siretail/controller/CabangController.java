@@ -5,6 +5,7 @@ import apap.tugas.siretail.model.UserModel;
 import apap.tugas.siretail.repository.CabangDb;
 import apap.tugas.siretail.service.CabangService;
 import apap.tugas.siretail.service.UserService;
+import io.netty.handler.codec.http.HttpMethod;
 import apap.tugas.siretail.controller.PageController;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,15 @@ import org.springframework.ui.Model;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.web.client.RestTemplate;
+
+import aj.org.objectweb.asm.Type;
 
 @SuppressWarnings("ALL")
 @Controller
@@ -35,6 +40,9 @@ public class CabangController {
 
     @Autowired
     private CabangDb cabangDb;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
 //    @PostMapping(value = "/cabang/add", params = {"addRow"})
 //    public String addRowCabangMultiple(
@@ -155,10 +163,13 @@ public class CabangController {
         return "form-update-cabang";
     }
 
-    @GetMapping("/request-item")
+    @GetMapping("/request-item/{id}")
     public String requestStokItemForm(
-            Model model
+        @PathVariable int id,
+        Model model
     ) {
+        CabangModel cabang = cabangService.getCabangByIdCabang(id);
+        model.addAttribute("cabang", cabang);
         return "form-update-stok-item";
     }
 
@@ -212,5 +223,26 @@ public class CabangController {
 
         return "redirect:/cabang/permintaan-cabang";
     }
+
+    @PostMapping("/cabang/request-item")
+    public String requestItemStokSubmit(
+            Model model,
+            @RequestParam("idItem") int idItem,
+            @RequestParam("jumlah_stok") int jumlah_stok
+            
+    ) {
+        final String uri = "https://sifactory-a04.herokuapp.com/api/request";
+
+        RestTemplate restTemplate = new RestTemplate();
+        HashMap<String, Integer> input = new HashMap<String, Integer>();
+        input.put("idItem", idItem);
+        input.put("jumlah_stok", jumlah_stok);
+        String result = restTemplate.postForObject(uri, HttpMethod.POST, String.class, input);
+        System.out.println(result);
+        model.addAttribute("msg", 1);
+        return "form-update-stok-item";
+    }
+
+    
 }
 
