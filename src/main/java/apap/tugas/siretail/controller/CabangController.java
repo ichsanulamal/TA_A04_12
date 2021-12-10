@@ -24,6 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import aj.org.objectweb.asm.Type;
 
@@ -40,6 +42,8 @@ public class CabangController {
 
     @Autowired
     private CabangDb cabangDb;
+
+    private WebClient webClient;
 
     // @Autowired
     // private RestTemplate restTemplate;
@@ -229,15 +233,21 @@ public class CabangController {
             Model model,
             @RequestParam("idItem") String idItem,
             @RequestParam("jumlah_stok") int jumlah_stok
-            
     ) {
-        final String uri = "https://sifactory-a04.herokuapp.com/api/request";
-        RestTemplate restTemplate = new RestTemplate();
-        HashMap<String, Object> input = new HashMap<String, Object>();
-        input.put("idItem", idItem);
-        input.put("jumlah_stok", jumlah_stok);
-        String result = restTemplate.postForObject(uri, HttpMethod.POST, String.class, input);
-        System.out.println(result);
+        HashMap reqBody = new HashMap<>();
+        reqBody.put("uuid", idItem);
+        reqBody.put("jumlah_stok", jumlah_stok);
+        
+        WebClient webClient = WebClient.create("https://sifactory-a04.herokuapp.com/api");
+
+        webClient
+            .post()
+            .uri("/request/")
+            .body(Mono.just(reqBody), HashMap.class)
+            .retrieve()
+            .bodyToMono(HashMap.class)
+            .block();
+
         model.addAttribute("msg", 1);
         return "success-request";
     }
