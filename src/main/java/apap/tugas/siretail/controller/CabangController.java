@@ -41,8 +41,8 @@ public class CabangController {
     @Autowired
     private CabangDb cabangDb;
 
-    @Autowired
-    private RestTemplate restTemplate;
+    // @Autowired
+    // private RestTemplate restTemplate;
 
 //    @PostMapping(value = "/cabang/add", params = {"addRow"})
 //    public String addRowCabangMultiple(
@@ -232,11 +232,16 @@ public class CabangController {
             
     ) {
         final String uri = "https://sifactory-a04.herokuapp.com/api/request";
+        // final String uri = "https://si-item.herokuapp.com/api/item";
 
         RestTemplate restTemplate = new RestTemplate();
-        HashMap<String, Integer> input = new HashMap<String, Integer>();
+        HashMap<String, Object> input = new HashMap<String, Object>();
         input.put("idItem", idItem);
         input.put("jumlah_stok", jumlah_stok);
+        // input.put("harga", idItem);
+        // input.put("kategori", jumlah_stok);
+        // input.put("nama", "string");
+        // input.put("stok", jumlah_stok);
         String result = restTemplate.postForObject(uri, HttpMethod.POST, String.class, input);
         System.out.println(result);
         model.addAttribute("msg", 1);
