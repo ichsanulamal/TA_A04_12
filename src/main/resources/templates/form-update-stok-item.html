@@ -24,10 +24,8 @@
       <form th:action="@{/cabang/request-item}" method="POST">
         <label>Nama Item</label>
         <select required class="form-control" name="idItem">
-          <div th:each="item, iterationStatus2 : ${cabang.listItem}">
-            <option th:value="${item.uuid}"
-              th:text="${item.nama}">
-            </option>
+          <div th:each="item, iterationStat : ${cabang.listItem}">
+            <option th:text="${item.nama}" th:value="${item.itemID}"></option>
           </div>
         </select>
         <br>
