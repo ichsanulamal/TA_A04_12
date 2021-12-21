@@ -29,8 +29,16 @@
                   <th>Jumlah Item dalam Cabang</th>
                   <th>Status</th>
                   <th>Lihat Detail</th>
-                  <th>Update</th>
-                  <th>Hapus</th>
+                  <th
+                    sec:authorize="hasAnyAuthority('Kepala Retail', 'Manager Cabang')"
+                  >
+                    Update
+                  </th>
+                  <th
+                    sec:authorize="hasAnyAuthority('Kepala Retail', 'Manager Cabang')"
+                  >
+                    Hapus
+                  </th>
                 </tr>
               </thead>
               <tbody th:each="cabang, x : ${listCabang}">
@@ -39,9 +47,17 @@
                   <td th:text="${cabang.id}"></td>
                   <td th:text="${cabang.nama}"></td>
                   <td th:text="${cabang.noTelepon}"></td>
-                  <td th:text="${cabang.ukuran}"></td>
+                  <td th:text="${cabang.ukuran}+' &#13217;'"></td>
                   <td th:text="${#lists.size(cabang.listItem)}"></td>
-                  <td th:text="${cabang.status}"></td>
+                  <div th:if="${cabang.status == 0}">
+                    <td th:text="'Menunggu Persetujuan'"></td>
+                  </div>
+                  <div th:if="${cabang.status == 1}">
+                    <td th:text="'Ditolak'"></td>
+                  </div>
+                  <div th:if="${cabang.status == 2}">
+                    <td th:text="'Disetujui'"></td>
+                  </div>
                   <td>
                     <a
                       class="btn btn-primary"
