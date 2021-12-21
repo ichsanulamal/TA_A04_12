@@ -174,6 +174,7 @@ public class CabangController {
     ) {
         CabangModel cabang = cabangService.getCabangByIdCabang(id);
         model.addAttribute("cabang", cabang);
+        model.addAttribute("id", id);
         return "form-update-stok-item";
     }
 
@@ -232,22 +233,25 @@ public class CabangController {
     public String requestItemStokSubmit(
             Model model,
             @RequestParam("idItem") String idItem,
-            @RequestParam("jumlah_stok") int jumlah_stok
+            @RequestParam("jumlah_stok") int jumlah_stok,
+            @RequestParam("idCabang") int idCabang
     ) {
         HashMap reqBody = new HashMap<>();
-        reqBody.put("uuid", idItem);
-        reqBody.put("jumlah_stok", jumlah_stok);
+        reqBody.put("id_item", idItem);
+        reqBody.put("tambahan_stok", jumlah_stok);
+        reqBody.put("id_cabang", idCabang);
         
         WebClient webClient = WebClient.create("https://sifactory-a04.herokuapp.com/api");
 
+        System.out.println(
         webClient
             .post()
-            .uri("/request/")
+            .uri("/request/updateItem")
             .body(Mono.just(reqBody), HashMap.class)
             .retrieve()
             .bodyToMono(HashMap.class)
-            .block();
-
+            .block()
+        );
         model.addAttribute("msg", 1);
         return "success-request";
     }
