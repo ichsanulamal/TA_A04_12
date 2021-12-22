@@ -5,8 +5,6 @@ import apap.tugas.siretail.model.UserModel;
 import apap.tugas.siretail.repository.CabangDb;
 import apap.tugas.siretail.service.CabangService;
 import apap.tugas.siretail.service.UserService;
-import io.netty.handler.codec.http.HttpMethod;
-import apap.tugas.siretail.controller.PageController;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,18 +14,14 @@ import org.springframework.ui.Model;
 
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-
-import aj.org.objectweb.asm.Type;
 
 @SuppressWarnings("ALL")
 @Controller
@@ -44,41 +38,7 @@ public class CabangController {
     private CabangDb cabangDb;
 
     private WebClient webClient;
-
-    // @Autowired
-    // private RestTemplate restTemplate;
-
-//    @PostMapping(value = "/cabang/add", params = {"addRow"})
-//    public String addRowCabangMultiple(
-//            @ModelAttribute CabangModel cabang,
-//            Model model
-//    ) {
-//        if(cabang.getListMenu() == null || cabang.getListMenu().size() == 0){
-//            cabang.setListMenu(new ArrayList<>());
-//        }
-//        cabang.getListMenu().add(new MenuModel());
-//        List<MenuModel> listMenu = menuService.getListMenu();
-//
-//        model.addAttribute("cabang", cabang);
-//        model.addAttribute("listMenuExisting", listMenu);
-//        return "form-add-cabang";
-//    }
-//
-//    @PostMapping(value = "/cabang/add", params = {"deleteRow"})
-//    public String deleteRowCabangMultiple(
-//            @ModelAttribute CabangModel cabang,
-//            @RequestParam("deleteRow") Integer row,
-//            Model model
-//    ) {
-//        final Integer rowId = Integer.valueOf(row);
-//        cabang.getListMenu().remove(rowId.intValue());
-//
-//        List<MenuModel> listMenu = menuService.getListMenu();
-//
-//        model.addAttribute("cabang", cabang);
-//        model.addAttribute("listMenuExisting", listMenu);
-//        return "form-add-cabang";
-//    }
+    
     @GetMapping("/cabang/add") 
     public String addCabangForm(Model model) {
         model.addAttribute("cabang", new CabangModel());
