@@ -23,19 +23,19 @@
       <br>
       <form th:action="@{/cabang/add}" th:object="${cabang}" method="POST">
         <label>Nama Cabang</label>
-        <input type="text" name="nama" class="form-control"/>
+        <input required type="text" name="nama" class="form-control"/>
         <br>
 
         <label>Alamat</label>
-        <input type="text" name="alamat" class="form-control"/>
+        <input required type="text" name="alamat" class="form-control"/>
         <br>
 
         <label>No. Telepon Cabang</label>
-        <input type="text" name="noTelepon" class="form-control">
+        <input required type="text" name="noTelepon" class="form-control">
         <br>
 
         <label>Ukuran</label>
-        <input type="number" name="ukuran" class="form-control">
+        <input required type="number" min="1" name="ukuran" class="form-control">
         <br>
 
         <button type="submit" class="btn btn-primary">Submit</button>

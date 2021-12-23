@@ -12,7 +12,6 @@ import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api")
@@ -33,7 +32,8 @@ public class CabangRestController {
     }
 
     @PostMapping(path="/cabang/request")
-    private CabangModel createCabang(@Valid @RequestBody CabangModel cabang, BindingResult bindingResult) {
+    public CabangModel createCabang(@Valid @RequestBody CabangModel cabang, BindingResult bindingResult) {
+        
         if (bindingResult.hasFieldErrors()) {
             throw new ResponseStatusException(
                 HttpStatus.BAD_REQUEST, "Request body has invalid or missing field"
