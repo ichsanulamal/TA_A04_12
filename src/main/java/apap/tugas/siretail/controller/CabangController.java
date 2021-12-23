@@ -77,8 +77,7 @@ public class CabangController {
         List<CabangModel> listCabang = new ArrayList<CabangModel>();
         if (authentication.getAuthorities().toString().equals("[Manager Cabang]")){
             // try {
-            List<CabangModel> dataCabang = cabangService.getAllCabang();
-            listCabang = cabangService.getAllCabangByManager(authentication.getName().toString(), dataCabang);
+            listCabang = cabangService.getAllCabangByManager(authentication.getName().toString());
             // } catch (NullPointerException e) {
                 
             // }
