@@ -43,16 +43,15 @@ public class CabangServiceImpl implements CabangService {
     }
 
     @Override
-    public List<CabangModel> getAllCabangByManager(String username, List<CabangModel> dataCabang){
-        List<CabangModel> listCabangManager = new ArrayList<CabangModel>();
+    public List<CabangModel> getAllCabangByManager(String username){
+        List<CabangModel> dataCabang = cabangDb.findAll();
+        List<CabangModel> listCabang = new ArrayList<CabangModel>();
         for (CabangModel cabang : dataCabang) {
             String username_penanggung_jawab = cabang.getPenanggungJawab().getUsername();
             System.out.println(username_penanggung_jawab.equals(username));
-            // if (username_penanggung_jawab.equals(username)) {
-                listCabangManager.add(cabang);
-            // }
+            listCabang.add(cabang);
         }
-        return listCabangManager;
+        return listCabang;
     }
 
     @Override
