@@ -75,24 +75,11 @@ public class CabangController {
     @GetMapping("/cabang/viewall")
     public String viewAllCabang(Authentication authentication, Model model) {
         List<CabangModel> listCabang = new ArrayList<CabangModel>();
-        // if (authentication.getAuthorities().toString().equals("[Manager Cabang]")){
-        //     listCabang = cabangService.getAllCabangByManager(authentication.getName().toString());
-        // } else {
-        //     listCabang = cabangService.getAllCabang();
-        // }
-
-        List<CabangModel> semuaCabang = cabangService.getAllCabang();
-
         if (authentication.getAuthorities().toString().equals("[Manager Cabang]")){
-            for (CabangModel x : semuaCabang){
-                if(authentication.getName().equals(x.getPenanggungJawab().getUsername())){
-                    listCabang.add(x);
-                }
-            }
+            listCabang = cabangService.getAllCabangByManager(authentication.getName());
         } else {
-            listCabang = semuaCabang;
+            listCabang = cabangService.getAllCabang();
         }
-
         model.addAttribute("listCabang", listCabang);
 
         //izin nambahin buat code gw
