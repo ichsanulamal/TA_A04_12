@@ -94,9 +94,7 @@ public class CabangController {
         Model model
     ) {
         CabangModel cabang = cabangService.getCabangByIdCabang(id);
-        if (cabang.getStatus() == 0) {
-            return "cannot-delete-cabang";
-        } else if (cabang.getListItem().size() > 0) {
+        if (cabang.getListItem().size() > 0) {
             return "cannot-delete-cabang";
         } else {
             cabangService.deleteCabang(cabang);
