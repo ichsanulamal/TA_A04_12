@@ -48,12 +48,14 @@ public class CabangServiceImpl implements CabangService {
         List<CabangModel> listCabang = new ArrayList<CabangModel>();
         for (CabangModel cabang : dataCabang) {
             String username_penanggung_jawab = cabang.getPenanggungJawab().getUsername();
+            if (username_penanggung_jawab.equals(null)){
+                continue;
+            }
             if (username_penanggung_jawab.equals(username)){
-                // listCabang.add(cabang);
-                System.out.println("udah masuk ke cek username");
+                listCabang.add(cabang);
             }
         }
-        return dataCabang;
+        return listCabang;
     }
 
     @Override
