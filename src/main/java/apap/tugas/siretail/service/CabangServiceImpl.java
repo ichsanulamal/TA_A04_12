@@ -46,9 +46,8 @@ public class CabangServiceImpl implements CabangService {
     public List<CabangModel> getAllCabangByManager(String username, List<CabangModel> dataCabang){
         List<CabangModel> listCabangManager = new ArrayList<CabangModel>();
         for (CabangModel cabang : dataCabang) {
-            System.out.println(username);
-            System.out.println(cabang.getPenanggungJawab().getUsername().equals(username));
-            if (cabang.getPenanggungJawab().getUsername().equals(username)) {
+            String username_penanggung_jawab = cabang.getPenanggungJawab().getUsername();
+            if (username_penanggung_jawab.equals(username)) {
                 listCabangManager.add(cabang);
             }
         }
