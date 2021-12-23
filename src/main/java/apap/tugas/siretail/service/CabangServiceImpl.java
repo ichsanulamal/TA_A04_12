@@ -47,11 +47,10 @@ public class CabangServiceImpl implements CabangService {
         List<CabangModel> dataCabang = cabangDb.findAll();
         List<CabangModel> listCabang = new ArrayList<CabangModel>();
         for (CabangModel cabang : dataCabang) {
-            String username_penanggung_jawab = cabang.getPenanggungJawab().getUsername();
-            if (username_penanggung_jawab.equals(null)){
+            if (cabang.getPenanggungJawab() == null){
                 continue;
             }
-            if (username_penanggung_jawab.equals(username)){
+            else if(cabang.getPenanggungJawab().getUsername().equals(username)){
                 listCabang.add(cabang);
             }
         }
