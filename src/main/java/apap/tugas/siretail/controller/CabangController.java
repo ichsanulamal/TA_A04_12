@@ -76,13 +76,13 @@ public class CabangController {
     public String viewAllCabang(Authentication authentication, Model model) {
         List<CabangModel> listCabang = new ArrayList<CabangModel>();
         if (authentication.getAuthorities().toString().equals("[Manager Cabang]")){
-            List<CabangModel> listCabangData = cabangService.getAllCabang();
-            for (CabangModel cabang : listCabangData) {
-                if (cabang.getPenanggungJawab().getUsername().equals(authentication.getName())) {
-                    listCabang.add(cabang);
-                }
+            try {
+                listCabang = cabangService.getAllCabangByManager(authentication.getName().toString());
+            } catch (NullPointerException e) {
+                model.addAttribute("listCabang", listCabang);
+                return "view-all-cabang";
             }
-            // listCabang = cabangService.getAllCabangByManager(authentication.getName().toString());
+            
         } 
         else {
             listCabang = cabangService.getAllCabang();
