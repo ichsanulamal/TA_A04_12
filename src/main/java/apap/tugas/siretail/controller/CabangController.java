@@ -80,19 +80,6 @@ public class CabangController {
         } else {
             listCabang = cabangService.getAllCabang();
         }
-
-        // List<CabangModel> semuaCabang = cabangService.getAllCabang();
-
-        // if (authentication.getAuthorities().toString().equals("[Manager Cabang]")){
-        //     for (CabangModel x : semuaCabang){
-        //         if(authentication.getName().equals(x.getPenanggungJawab().getUsername())){
-        //             listCabang.add(x);
-        //         }
-        //     }
-        // } else {
-        //     listCabang = semuaCabang;
-        // }
-
         model.addAttribute("listCabang", listCabang);
 
         //izin nambahin buat code gw
