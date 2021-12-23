@@ -77,12 +77,7 @@ public class CabangController {
         List<CabangModel> listCabang = new ArrayList<CabangModel>();
         if (authentication.getAuthorities().toString().equals("[Manager Cabang]")){
             String username = authentication.getName().toString();
-            try {
-                listCabang = cabangService.getAllCabangByManager(username);
-            } catch (Exception e) {
-                model.addAttribute("listCabang", listCabang);
-                return "view-all-cabang";
-            }
+            listCabang = cabangService.getAllCabangByManager(username);
         } 
         else {
             listCabang = cabangService.getAllCabang();
