@@ -9,7 +9,7 @@ public interface CabangService {
     void addCabang(CabangModel cabang);
     CabangModel getCabangByIdCabang(int id);
     List<CabangModel> getAllCabang();
-    List<CabangModel> getAllCabangByManager();
+    List<CabangModel> getAllCabangByManager(String username);
     void deleteCabang(CabangModel cabang);
     void updateCabang(CabangModel cabang);
 }
