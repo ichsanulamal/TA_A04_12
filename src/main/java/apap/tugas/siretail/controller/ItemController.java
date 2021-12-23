@@ -43,7 +43,7 @@ public class ItemController {
     @GetMapping("/item/{idCabang}/add")
     public String addItemForm(Model model, @PathVariable Integer idCabang) {
         if (!isAuthorizedAddItem(idCabang)) {
-            return "error/401";
+            return "error/403";
         }
 
         List<SiItemModel> listItem = itemRestService.getListItemFromSiItem();
@@ -66,7 +66,7 @@ public class ItemController {
             RedirectAttributes redirectAttributes
     ) {
         if (!isAuthorizedAddItem(idCabang)) {
-            return "error/401";
+            return "error/403";
         }
 
         List<String> notif = new ArrayList<>();
