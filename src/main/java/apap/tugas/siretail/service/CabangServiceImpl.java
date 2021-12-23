@@ -47,10 +47,8 @@ public class CabangServiceImpl implements CabangService {
         List<CabangModel> listCabang = cabangDb.findAll();
         List<CabangModel> listCabangManager = new ArrayList<CabangModel>();
         for (CabangModel cabang : listCabang) {
-            if (cabang.getPenanggungJawab().getRole().getNama().equalsIgnoreCase("Manager Cabang")) {
-                if(cabang.getPenanggungJawab().getUsername().equals(username)){
-                    listCabangManager.add(cabang);
-                }
+            if(cabang.getPenanggungJawab().getUsername().equals(username)){
+                listCabangManager.add(cabang);
             }
         }
         return listCabangManager;
