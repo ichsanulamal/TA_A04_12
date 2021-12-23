@@ -31,7 +31,9 @@
                 <td th:text="${user.username}"></td>
                 <td th:text="${user.role.nama}"></td>
                 <td sec:authorize="hasAnyAuthority('Kepala Retail', 'Manager Cabang')">
-                    <a class="btn btn-danger" th:href="@{/user/edit/} + ${user.username}">Edit</a>
+                    <div th:unless="${user.role.id == 1} and ${#authorization.expression('hasAuthority(''Manager Cabang'')')}">
+                        <a class="btn btn-danger" th:href="@{/user/edit/} + ${user.username}">Edit</a>
+                    </div>
                 </td>
             </tr>
         </tbody>
