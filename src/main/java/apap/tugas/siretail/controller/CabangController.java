@@ -76,12 +76,11 @@ public class CabangController {
     public String viewAllCabang(Authentication authentication, Model model) {
         List<CabangModel> listCabang = new ArrayList<CabangModel>();
         if (authentication.getAuthorities().toString().equals("[Manager Cabang]")){
-            try {
-                listCabang = cabangService.getAllCabangByManager(authentication.getName().toString());
-            } catch (NullPointerException e) {
-                model.addAttribute("listCabang", listCabang);
-                return "view-all-cabang";
-            }
+            // try {
+            listCabang = cabangService.getAllCabangByManager(authentication.getName().toString());
+            // } catch (NullPointerException e) {
+                
+            // }
             
         } 
         else {
